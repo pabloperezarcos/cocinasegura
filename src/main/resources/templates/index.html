@@ -1,43 +1,72 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cocina Segura</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body>
-    <div class="container">
-        <h1>Bienvenido a Cocina Segura</h1>
-        <h2>Recetas Populares</h2>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Cocina Segura</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#recetas">Recetas Populares</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/buscar">Buscar Recetas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login">Iniciar Sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-        <!-- Enlace a la búsqueda -->
-        <div class="search-link">
-            <a th:href="@{/buscar}">Buscar Recetas</a>
+    <!-- Main Content -->
+    <main class="container my-5">
+        <div class="text-center mb-5">
+            <h1 class="display-4">Bienvenido a Cocina Segura</h1>
+            <p class="lead">Descubre las recetas más populares y deliciosas para preparar en casa</p>
         </div>
 
-        <ul>
-            <!-- Arreglo de lista de recetas -->
-            <li th:each="receta : ${recetas}">
-                <!-- título de la receta -->
-                <h3 th:text="${receta.titulo}">Título de la receta</h3>
-                <!-- descripción de la receta -->
-                <p th:text="${receta.descripcion}">Descripción de la receta</p>
-                <!-- imagen de la receta -->
-                <img th:src="@{${receta.imagenURL}}" alt="Imagen de la receta" width="200" />
-            </li>
-        </ul>
+        <!-- Recetas Populares -->
+        <section id="recetas" class="row g-4">
+            <div class="col-md-4" th:each="receta : ${recetas}">
+                <div class="card h-100 shadow-sm">
+                    <img src="https://via.placeholder.com/300x200" th:src="@{${receta.imagenURL}}" class="card-img-top"
+                        alt="Imagen de la receta">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${receta.titulo}">Título de la receta</h5>
+                        <p class="card-text" th:text="${receta.descripcion}">Descripción de la receta</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
-        <!-- Enlace al login -->
-        <div class="login-link">
-            <a th:href="@{/login}">Iniciar Sesión</a>
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4">
+        <div class="container">
+            <p class="mb-0">&copy; 2024 Cocina Segura</p>
+            <small>Byron Jaramillo - Pablo Pérez</small>
         </div>
-    </div>
-
-    <footer class="text-center">
-        2024 Cocina Segura
-        Byron Jaramillo - Pablo Pérez
     </footer>
+
+    <!-- Bootstrap JS (Opcional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
+</html>

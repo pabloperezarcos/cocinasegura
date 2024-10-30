@@ -1,185 +1,25 @@
-/* Estilos generales */
+/* General */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f9f9f9;
-    /* Fondo claro para una buena legibilidad */
-    margin: 0;
-    padding: 0;
-    color: #333;
-    /* Texto en tono oscuro para buen contraste */
 }
 
-/* Encabezados */
-h1,
-h2,
-h3 {
+/* Card Titles */
+.card-title {
     color: #e63946;
-    /* Rojo intenso para destacar títulos (asociado con cocina) */
-    text-align: center;
-    margin-top: 20px;
 }
 
-/* Enlaces */
-a {
-    color: #1d3557;
-    /* Azul oscuro para enlaces (asociado con seguridad) */
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
-/* Contenedor principal */
-.container {
-    width: 80%;
-    margin: 0 auto;
-    padding: 20px;
-}
-
-/* Lista de recetas */
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-li {
-    background-color: #fff;
-    /* Fondo blanco para cada tarjeta de receta */
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    overflow: hidden;
-    display: flex;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-/* Imagen de la receta */
-li img {
-    width: 200px;
-    height: auto;
-    object-fit: cover;
-}
-
-/* Contenido de la receta */
-.recipe-content {
-    padding: 20px;
-    flex: 1;
-}
-
-.recipe-content h3 {
-    margin-top: 0;
-    color: #2a9d8f;
-    /* Verde azulado para subtítulos (ingredientes frescos) */
-}
-
-.recipe-content p {
-    line-height: 1.6;
-    color: #555;
-}
-
-/* Estilos para el formulario de búsqueda */
-form {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-}
-
-form label {
-    display: block;
-    margin-bottom: 5px;
-    color: #1d3557;
-}
-
-form input[type="text"],
-form select {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-form input[type="submit"] {
-    background-color: #e76f51;
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-form input[type="submit"]:hover {
-    background-color: #d65a38;
-}
-
-/* Estilos para los resultados de búsqueda */
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-ul li {
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    padding: 15px;
-    margin-bottom: 15px;
-}
-
-ul li h3 {
-    margin-top: 0;
-    color: #2a9d8f;
-}
-
-ul li p {
-    color: #555;
-    margin: 5px 0;
-}
-
-
-/* Botón de Iniciar Sesión */
-.login-link {
-    text-align: right;
-    margin-top: 20px;
-}
-
-.login-link a {
-    background-color: #1d3557;
-    color: #fff;
-    padding: 10px 15px;
-    border-radius: 4px;
-}
-
-.login-link a:hover {
-    background-color: #163048;
+/* Lead Text */
+.lead {
+    color: #6c757d;
 }
 
 /* Footer */
 footer {
     background-color: #2a9d8f;
     color: #fff;
-    text-align: center;
-    padding: 15px 0;
-    margin-top: 40px;
 }
 
-/* Responsividad */
-@media (max-width: 768px) {
-    .container {
-        width: 95%;
-    }
-
-    li {
-        flex-direction: column;
-    }
-
-    li img {
-        width: 100%;
-    }
-
-    .login-link {
-        text-align: center;
-    }
+footer p,
+footer small {
+    margin: 0;
 }
