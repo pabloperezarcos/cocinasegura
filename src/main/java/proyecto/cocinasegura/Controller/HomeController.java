@@ -30,6 +30,13 @@ public class HomeController {
     // Método para manejar la búsqueda de recetas
     @GetMapping("/buscar")
     public String buscar() {
-        return "buscar"; // Nombre de la plantilla buscar.html
+        return "buscar";
     }
+
+    // Método para ingresar al login
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
 }

@@ -5,66 +5,103 @@
     <meta charset="UTF-8">
     <title>Buscar Recetas</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" th:href="@{/assets/css/style.css}" />
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 
 <body>
-    <div class="container">
-        <h1>Buscar Recetas</h1>
-        <form action="#" method="get">
-            <!-- Campos de búsqueda -->
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre"><br><br>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">Cocina Segura</a>
+        </div>
+    </nav>
 
-            <label for="tipoCocina">Tipo de Cocina:</label>
-            <input type="text" id="tipoCocina" name="tipoCocina"><br><br>
+    <!-- Main Content -->
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Buscar Recetas</h1>
+        <form action="#" method="get" class="mb-5">
+            <div class="row g-3">
+                <!-- Nombre -->
+                <div class="col-md-6">
+                    <label for="nombre" class="form-label">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ej: Paella">
+                </div>
 
-            <label for="ingredientes">Ingredientes:</label>
-            <input type="text" id="ingredientes" name="ingredientes"><br><br>
+                <!-- Tipo de Cocina -->
+                <div class="col-md-6">
+                    <label for="tipoCocina" class="form-label">Tipo de Cocina</label>
+                    <input type="text" id="tipoCocina" name="tipoCocina" class="form-control"
+                        placeholder="Ej: Japonesa">
+                </div>
 
-            <label for="paisOrigen">País de Origen:</label>
-            <input type="text" id="paisOrigen" name="paisOrigen"><br><br>
+                <!-- Ingredientes -->
+                <div class="col-md-6">
+                    <label for="ingredientes" class="form-label">Ingredientes</label>
+                    <input type="text" id="ingredientes" name="ingredientes" class="form-control"
+                        placeholder="Ej: Arroz, Mariscos">
+                </div>
 
-            <label for="dificultad">Dificultad:</label>
-            <select id="dificultad" name="dificultad">
-                <option value="">Seleccione</option>
-                <option value="Fácil">Fácil</option>
-                <option value="Media">Media</option>
-                <option value="Difícil">Difícil</option>
-            </select><br><br>
+                <!-- País de Origen -->
+                <div class="col-md-6">
+                    <label for="paisOrigen" class="form-label">País de Origen</label>
+                    <input type="text" id="paisOrigen" name="paisOrigen" class="form-control" placeholder="Ej: España">
+                </div>
 
-            <input type="submit" value="Buscar">
+                <!-- Dificultad -->
+                <div class="col-md-6">
+                    <label for="dificultad" class="form-label">Dificultad</label>
+                    <select id="dificultad" name="dificultad" class="form-select">
+                        <option value="">Seleccione</option>
+                        <option value="Fácil">Fácil</option>
+                        <option value="Media">Media</option>
+                        <option value="Difícil">Difícil</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Botón de Búsqueda -->
+            <div class="text-center mt-4">
+                <input type="submit" value="Buscar" class="btn btn-primary px-4">
+            </div>
         </form>
 
-        <!-- Resultados de búsqueda -->
-        <h2>Resultados de la Búsqueda</h2>
-        <ul>
-            <li>
-                <h3>Paella</h3>
-                <p>Tipo de Cocina: Española</p>
-                <p>Ingredientes: Arroz, Mariscos, Azafrán</p>
-                <p>País de Origen: España</p>
-                <p>Dificultad: Media</p>
+        <!-- Resultados de Búsqueda -->
+        <h2 class="text-center mb-4">Resultados de la Búsqueda</h2>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <h3 class="mb-1">Paella</h3>
+                <p class="mb-1"><strong>Tipo de Cocina:</strong> Española</p>
+                <p class="mb-1"><strong>Ingredientes:</strong> Arroz, Mariscos, Azafrán</p>
+                <p class="mb-1"><strong>País de Origen:</strong> España</p>
+                <p class="mb-1"><strong>Dificultad:</strong> Media</p>
             </li>
-            <li>
-                <h3>Sushi</h3>
-                <p>Tipo de Cocina: Japonesa</p>
-                <p>Ingredientes: Arroz, Pescado, Algas</p>
-                <p>País de Origen: Japón</p>
-                <p>Dificultad: Difícil</p>
+            <li class="list-group-item">
+                <h3 class="mb-1">Sushi</h3>
+                <p class="mb-1"><strong>Tipo de Cocina:</strong> Japonesa</p>
+                <p class="mb-1"><strong>Ingredientes:</strong> Arroz, Pescado, Algas</p>
+                <p class="mb-1"><strong>País de Origen:</strong> Japón</p>
+                <p class="mb-1"><strong>Dificultad:</strong> Difícil</p>
             </li>
-      
         </ul>
 
-        <!-- Enlace al inicio -->
-        <div class="login-link">
-            <a th:href="@{/}">Volver al Inicio</a>
+        <!-- Enlace al Inicio -->
+        <div class="text-center mt-4">
+            <a href="/" class="btn btn-secondary">Volver al Inicio</a>
         </div>
     </div>
-    <footer class="text-center">
-        2024 Cocina Segura
-        Byron Jaramillo - Pablo Pérez
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <div class="container">
+            <p class="mb-0">&copy; 2024 Cocina Segura</p>
+            <small>Byron Jaramillo - Pablo Pérez</small>
+        </div>
     </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

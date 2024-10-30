@@ -16,49 +16,51 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .authorizeHttpRequests(authorize -> authorize
-                        // Rutas públicas
-                        .requestMatchers("/", "/login", "/buscar", "/assets/**", "/css/**", "/js/**", "/images/**")
-                        .permitAll()
-                        // Cualquier otra ruta requiere autenticación
-                        .anyRequest().authenticated())
-                .formLogin(form -> form
-                        .loginPage("/login")
-                        .permitAll())
-                .logout(logout -> logout
-                        .permitAll());
+        @Bean
+        public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+                http
+                                .authorizeHttpRequests(authorize -> authorize
+                                                // Rutas públicas
+                                                .requestMatchers("/", "/login", "/buscar", "/assets/**", "/css/**",
+                                                                "/js/**", "/images/**")
+                                                .permitAll()
 
-        return http.build();
-    }
+                                                // Cualquier otra ruta requiere autenticación
+                                                .anyRequest().authenticated())
+                                .formLogin(form -> form
+                                                .loginPage("/login")
+                                                .permitAll())
+                                .logout(logout -> logout
+                                                .permitAll());
 
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+                return http.build();
+        }
 
-    @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-        UserDetails user1 = User.builder()
-                .username("usuario1")
-                .password(passwordEncoder.encode("password1"))
-                .roles("USER")
-                .build();
+        @Bean
+        public PasswordEncoder passwordEncoder() {
+                return new BCryptPasswordEncoder();
+        }
 
-        UserDetails user2 = User.builder()
-                .username("usuario2")
-                .password(passwordEncoder.encode("password2"))
-                .roles("USER")
-                .build();
+        @Bean
+        public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
+                UserDetails user1 = User.builder()
+                                .username("usuario1")
+                                .password(passwordEncoder.encode("password1"))
+                                .roles("USER")
+                                .build();
 
-        UserDetails admin = User.builder()
-                .username("admin")
-                .password(passwordEncoder.encode("adminpass"))
-                .roles("ADMIN")
-                .build();
+                UserDetails user2 = User.builder()
+                                .username("usuario2")
+                                .password(passwordEncoder.encode("password2"))
+                                .roles("USER")
+                                .build();
 
-        return new InMemoryUserDetailsManager(user1, user2, admin);
-    }
+                UserDetails admin = User.builder()
+                                .username("admin")
+                                .password(passwordEncoder.encode("adminpass"))
+                                .roles("ADMIN")
+                                .build();
+
+                return new InMemoryUserDetailsManager(user1, user2, admin);
+        }
 }
