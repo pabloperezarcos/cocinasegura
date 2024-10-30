@@ -78,18 +78,7 @@ li img {
     color: #555;
 }
 
-/* Banners de avisos comerciales */
-.banner {
-    background-color: #457b9d;
-    /* Azul medio (seguridad) */
-    color: #fff;
-    padding: 10px;
-    text-align: center;
-    margin-bottom: 20px;
-    border-radius: 8px;
-}
-
-/* Formulario de búsqueda */
+/* Estilos para el formulario de búsqueda */
 form {
     background-color: #fff;
     padding: 20px;
@@ -114,7 +103,6 @@ form select {
 
 form input[type="submit"] {
     background-color: #e76f51;
-    /* Naranja oscuro (energía y vitalidad) */
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -125,6 +113,31 @@ form input[type="submit"] {
 form input[type="submit"]:hover {
     background-color: #d65a38;
 }
+
+/* Estilos para los resultados de búsqueda */
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+ul li {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+ul li h3 {
+    margin-top: 0;
+    color: #2a9d8f;
+}
+
+ul li p {
+    color: #555;
+    margin: 5px 0;
+}
+
 
 /* Botón de Iniciar Sesión */
 .login-link {

@@ -12,10 +12,12 @@
     <div class="container">
         <h1>Bienvenido a Cocina Segura</h1>
         <h2>Recetas Populares</h2>
-        <div class="banner">
-            <!-- Contenido del banner de avisos comerciales -->
-            <p>Anuncio de empresa interesada</p>
+
+        <!-- Enlace a la búsqueda -->
+        <div class="search-link">
+            <a th:href="@{/buscar}">Buscar Recetas</a>
         </div>
+
         <ul>
             <!-- Arreglo de lista de recetas -->
             <li th:each="receta : ${recetas}">
@@ -27,11 +29,13 @@
                 <img th:src="@{${receta.imagenURL}}" alt="Imagen de la receta" width="200" />
             </li>
         </ul>
+
         <!-- Enlace al login -->
         <div class="login-link">
             <a th:href="@{/login}">Iniciar Sesión</a>
         </div>
     </div>
+
     <footer class="text-center">
         2024 Cocina Segura
         Byron Jaramillo - Pablo Pérez
