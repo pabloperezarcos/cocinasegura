@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cocina Segura</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+
+<body>
+    <h1>Bienvenido a Cocina Segura</h1>
+    <h2>Recetas Populares</h2>
+    <div>
+        <ul>
+            <li th:each="receta : ${recetas}">
+                <h3 th:text="${receta.titulo}">Título de la receta</h3>
+                <p th:text="${receta.descripcion}">Descripción de la receta</p>
+                <img th:src="@{${receta.imagenURL}}" alt="Imagen de la receta" width="200" />
+            </li>
+        </ul>
+    </div>
+
+    <!-- Enlace al login -->
+    <div>
+        <a th:href="@{/login}">Iniciar Sesión</a>
+    </div>
+</body>
+
+</html>
