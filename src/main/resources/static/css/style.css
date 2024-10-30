@@ -1,11 +1,42 @@
 /* General */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    /* Fondo gris claro para mejor contraste */
+}
+
+/* Ajustar el tamaño del logo en la barra de navegación */
+.navbar-logo {
+    width: 60px;
+    /* Cambia a tu tamaño deseado */
+    height: auto;
+    /* Mantiene la proporción de la imagen */
+}
+
+
+/* Tarjetas de recetas */
+.recipe-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.recipe-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 /* Card Titles */
 .card-title {
     color: #e63946;
+}
+
+/* Botón de Iniciar Sesión en la barra de navegación */
+.navbar .btn-outline-light {
+    border-color: #fff;
+}
+
+.navbar .btn-outline-light:hover {
+    background-color: #fff;
+    color: #2a9d8f;
 }
 
 /* Lead Text */

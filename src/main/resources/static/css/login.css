@@ -1,0 +1,48 @@
+/* Fondo general */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    /* Fondo gris claro */
+}
+
+/* Estilos adicionales para el formulario de inicio de sesión */
+.login-form {
+    background-color: #ffffff;
+    /* Fondo blanco para destacar el formulario */
+    border-radius: 10px;
+    /* Borde redondeado para un look moderno */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    /* Sombra suave */
+}
+
+/* Estilos para el botón */
+.btn-dark {
+    background-color: #343a40;
+    /* Color oscuro más neutro */
+    border: none;
+    color: #ffffff;
+    padding: 10px;
+}
+
+.btn-dark:hover {
+    background-color: #23272b;
+    /* Un poco más oscuro en hover */
+}
+
+/* Estilo del texto de error */
+.alert-danger {
+    font-size: 0.9rem;
+    padding: 8px;
+    margin-top: 15px;
+}
+
+/* Espaciado y estilo de "Volver al Inicio" */
+.btn-link {
+    font-weight: bold;
+    color: #343a40;
+}
+
+.btn-link:hover {
+    color: #000;
+    text-decoration: none;
+}
