@@ -1,0 +1,25 @@
+/* General */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Card Titles */
+.card-title {
+    color: #e63946;
+}
+
+/* Lead Text */
+.lead {
+    color: #6c757d;
+}
+
+/* Footer */
+footer {
+    background-color: #2a9d8f;
+    color: #fff;
+}
+
+footer p,
+footer small {
+    margin: 0;
+}

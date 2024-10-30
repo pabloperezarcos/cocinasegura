@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Buscar Recetas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}" />
+</head>
+
+<body>
+    <div class="container">
+        <h1>Buscar Recetas</h1>
+        <form action="#" method="get">
+            <!-- Campos de búsqueda -->
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre"><br><br>
+
+            <label for="tipoCocina">Tipo de Cocina:</label>
+            <input type="text" id="tipoCocina" name="tipoCocina"><br><br>
+
+            <label for="ingredientes">Ingredientes:</label>
+            <input type="text" id="ingredientes" name="ingredientes"><br><br>
+
+            <label for="paisOrigen">País de Origen:</label>
+            <input type="text" id="paisOrigen" name="paisOrigen"><br><br>
+
+            <label for="dificultad">Dificultad:</label>
+            <select id="dificultad" name="dificultad">
+                <option value="">Seleccione</option>
+                <option value="Fácil">Fácil</option>
+                <option value="Media">Media</option>
+                <option value="Difícil">Difícil</option>
+            </select><br><br>
+
+            <input type="submit" value="Buscar">
+        </form>
+
+        <!-- Resultados de búsqueda -->
+        <h2>Resultados de la Búsqueda</h2>
+        <ul>
+            <li>
+                <h3>Paella</h3>
+                <p>Tipo de Cocina: Española</p>
+                <p>Ingredientes: Arroz, Mariscos, Azafrán</p>
+                <p>País de Origen: España</p>
+                <p>Dificultad: Media</p>
+            </li>
+            <li>
+                <h3>Sushi</h3>
+                <p>Tipo de Cocina: Japonesa</p>
+                <p>Ingredientes: Arroz, Pescado, Algas</p>
+                <p>País de Origen: Japón</p>
+                <p>Dificultad: Difícil</p>
+            </li>
+      
+        </ul>
+
+        <!-- Enlace al inicio -->
+        <div class="login-link">
+            <a th:href="@{/}">Volver al Inicio</a>
+        </div>
+    </div>
+    <footer class="text-center">
+        2024 Cocina Segura
+        Byron Jaramillo - Pablo Pérez
+    </footer>
+</body>
+
+</html>
