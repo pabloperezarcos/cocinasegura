@@ -18,22 +18,30 @@ public class HomeController {
         return "index"; // Nombre HTML a renderizar
     }
 
-    // Método para obtener las recetas
-    private List<Receta> obtenerRecetas() {
-        List<Receta> recipes = new ArrayList<>();
-        // Agregamos recetas
-        recipes.add(new Receta("Paella", "Deliciosa paella española", "/images/paella.jpg"));
-        recipes.add(new Receta("Sushi", "Sushi tradicional japonés", "/images/sushi.jpg"));
-        return recipes;
+    // Método para mostrar la lista de recetas
+    @GetMapping("/recetas")
+    public String recetas(Model model) {
+        List<Receta> listaRecetas = obtenerRecetas();
+        model.addAttribute("recetas", listaRecetas);
+        return "recetas";
     }
 
-    // Método para manejar la búsqueda de recetas
+    // Método para obtener las recetas
+    private List<Receta> obtenerRecetas() {
+        List<Receta> recetas = new ArrayList<>();
+        // Agregamos recetas
+        recetas.add(new Receta(1, "Paella", "Deliciosa paella española", "/images/paella.jpg"));
+        recetas.add(new Receta(2, "Sushi", "Sushi tradicional japonés", "/images/sushi.jpg"));
+        return recetas;
+    }
+
+    // Mapeo para manejar la búsqueda de recetas
     @GetMapping("/buscar")
     public String buscar() {
         return "buscar";
     }
 
-    // Método para ingresar al login
+    // Mapeo para ingresar al login
     @GetMapping("/login")
     public String login() {
         return "login";

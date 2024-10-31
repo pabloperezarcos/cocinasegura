@@ -54,3 +54,39 @@ footer p,
 footer small {
     margin: 0;
 }
+
+
+/* Estilos para los banners comerciales */
+#banners .card {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+#banners .card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Ajustes específicos para las imágenes de los banners */
+#banners .card-img-top {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    width: 100%;
+    /* Ocupa el ancho completo de la tarjeta */
+    height: 180px;
+    /* Altura fija para todas las imágenes */
+    object-fit: cover;
+    /* Recorta y centra la imagen para ajustarla */
+}
+
+#banners .card-body {
+    background-color: #f1f1f1;
+    padding: 15px;
+}
+
+#banners .card-text {
+    font-weight: bold;
+    color: #333;
+}
