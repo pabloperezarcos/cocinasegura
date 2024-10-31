@@ -27,13 +27,13 @@ public class HomeController {
         return recipes;
     }
 
-    // Método para manejar la búsqueda de recetas
+    // Mapeo para manejar la búsqueda de recetas
     @GetMapping("/buscar")
     public String buscar() {
         return "buscar";
     }
 
-    // Método para ingresar al login
+    // Mapeo para ingresar al login
     @GetMapping("/login")
     public String login() {
         return "login";
