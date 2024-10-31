@@ -18,13 +18,21 @@ public class HomeController {
         return "index"; // Nombre HTML a renderizar
     }
 
+    // Método para mostrar la lista de recetas
+    @GetMapping("/recetas")
+    public String recetas(Model model) {
+        List<Receta> listaRecetas = obtenerRecetas();
+        model.addAttribute("recetas", listaRecetas);
+        return "recetas";
+    }
+
     // Método para obtener las recetas
     private List<Receta> obtenerRecetas() {
-        List<Receta> recipes = new ArrayList<>();
+        List<Receta> recetas = new ArrayList<>();
         // Agregamos recetas
-        recipes.add(new Receta("Paella", "Deliciosa paella española", "/images/paella.jpg"));
-        recipes.add(new Receta("Sushi", "Sushi tradicional japonés", "/images/sushi.jpg"));
-        return recipes;
+        recetas.add(new Receta("Paella", "Deliciosa paella española", "/images/paella.jpg"));
+        recetas.add(new Receta("Sushi", "Sushi tradicional japonés", "/images/sushi.jpg"));
+        return recetas;
     }
 
     // Mapeo para manejar la búsqueda de recetas
