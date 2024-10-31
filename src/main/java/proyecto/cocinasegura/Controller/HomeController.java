@@ -30,8 +30,8 @@ public class HomeController {
     private List<Receta> obtenerRecetas() {
         List<Receta> recetas = new ArrayList<>();
         // Agregamos recetas
-        recetas.add(new Receta("Paella", "Deliciosa paella española", "/images/paella.jpg"));
-        recetas.add(new Receta("Sushi", "Sushi tradicional japonés", "/images/sushi.jpg"));
+        recetas.add(new Receta(1, "Paella", "Deliciosa paella española", "/images/paella.jpg"));
+        recetas.add(new Receta(2, "Sushi", "Sushi tradicional japonés", "/images/sushi.jpg"));
         return recetas;
     }
 

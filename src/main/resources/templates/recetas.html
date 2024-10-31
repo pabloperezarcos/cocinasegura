@@ -42,9 +42,9 @@
             <!-- Iterar sobre las recetas -->
             <div class="col-md-4 mb-4" th:each="receta : ${recetas}">
                 <div class="card h-100">
-                    <img th:src="@{${receta.imagen}}" class="card-img-top" alt="Imagen de la receta">
+                    <img th:src="${receta.imagenURL}" class="card-img-top" alt="Imagen de la receta">
                     <div class="card-body">
-                        <h5 class="card-title" th:text="${receta.nombre}">Nombre de la receta</h5>
+                        <h5 class="card-title" th:text="${receta.titulo}">Nombre de la receta</h5>
                         <p class="card-text" th:text="${receta.descripcion}">Descripción de la receta</p>
                         <!-- Enlace al detalle de la receta (si está implementado) -->
                         <a th:href="@{/recetas/{id}(id=${receta.id})}" class="btn btn-primary">Ver Detalles</a>
