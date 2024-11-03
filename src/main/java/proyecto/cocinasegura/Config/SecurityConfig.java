@@ -1,14 +1,14 @@
 package proyecto.cocinasegura.Config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,25 +16,27 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 public class SecurityConfig {
 
+    @Autowired
+    private UserDetailsService userDetailsService;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-            .authorizeHttpRequests(authorize -> authorize
-                // Rutas públicas
-                .requestMatchers("/", "/login", "/buscar", "/assets/**", "/css/**",
-                    "/js/**", "/images/**", "/webjars/**").permitAll()
-                // Cualquier otra ruta requiere autenticación
-                .anyRequest().authenticated()
-            )
-            .formLogin(form -> form
-            .loginPage("/login")
-            .loginProcessingUrl("/perform_login") 
-            .defaultSuccessUrl("/", true)
-            .permitAll()
-        )        
-            .logout(logout -> logout
-                .permitAll()
-            );
+                .authorizeHttpRequests(authorize -> authorize
+                        // Rutas públicas
+                        .requestMatchers("/", "/login", "/buscar", "/assets/**", "/css/**",
+                                "/js/**", "/images/**", "/webjars/**")
+                        .permitAll()
+                        // Rutas protegidas
+                        .anyRequest().authenticated())
+                .formLogin(form -> form
+                        .loginPage("/login")
+                        .loginProcessingUrl("/perform_login")
+                        .defaultSuccessUrl("/", true)
+                        .permitAll())
+                .logout(logout -> logout
+                        .permitAll())
+                .authenticationProvider(authenticationProvider());
 
         return http.build();
     }
@@ -45,25 +47,12 @@ public class SecurityConfig {
     }
 
     @Bean
-    public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-        UserDetails user1 = User.builder()
-            .username("usuario1")
-            .password(passwordEncoder.encode("password1"))
-            .roles("USER")
-            .build();
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
 
-        UserDetails user2 = User.builder()
-            .username("usuario2")
-            .password(passwordEncoder.encode("password2"))
-            .roles("USER")
-            .build();
+        authProvider.setUserDetailsService(userDetailsService);
+        authProvider.setPasswordEncoder(passwordEncoder());
 
-        UserDetails admin = User.builder()
-            .username("admin")
-            .password(passwordEncoder.encode("adminpass"))
-            .roles("ADMIN")
-            .build();
-
-        return new InMemoryUserDetailsManager(user1, user2, admin);
+        return authProvider;
     }
 }
