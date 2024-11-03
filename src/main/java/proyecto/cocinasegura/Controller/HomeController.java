@@ -1,38 +1,38 @@
 package proyecto.cocinasegura.Controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import java.util.ArrayList;
-import java.util.List;
 import proyecto.cocinasegura.Model.Receta;
+import proyecto.cocinasegura.Repository.RecetaRepository; // Asegúrate de crear este repositorio
+
+import java.util.List;
 
 @Controller
 public class HomeController {
+
+    @Autowired
+    // Inyecta el repositorio de Receta
+    private RecetaRepository recetaRepository;
 
     // Mapeo para la página de inicio
     @GetMapping("/")
     public String index(Model model) {
         // Atributos al modelo para pasarlos a la vista
-        model.addAttribute("recetas", obtenerRecetas());
+        // Obtiene todas las recetas de la base de datos
+        List<Receta> recetas = recetaRepository.findAll();
+        model.addAttribute("recetas", recetas);
         return "index"; // Nombre HTML a renderizar
     }
 
     // Método para mostrar la lista de recetas
     @GetMapping("/recetas")
     public String recetas(Model model) {
-        List<Receta> listaRecetas = obtenerRecetas();
+        // Obtiene todas las recetas de la base de datos
+        List<Receta> listaRecetas = recetaRepository.findAll();
         model.addAttribute("recetas", listaRecetas);
         return "recetas";
-    }
-
-    // Método para obtener las recetas
-    private List<Receta> obtenerRecetas() {
-        List<Receta> recetas = new ArrayList<>();
-        // Agregamos recetas
-        recetas.add(new Receta(1, "Paella", "Deliciosa paella española", "/images/paella.jpg"));
-        recetas.add(new Receta(2, "Sushi", "Sushi tradicional japonés", "/images/sushi.jpg"));
-        return recetas;
     }
 
     // Mapeo para manejar la búsqueda de recetas
