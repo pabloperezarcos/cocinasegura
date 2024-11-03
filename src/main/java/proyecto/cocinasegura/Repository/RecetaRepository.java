@@ -10,11 +10,11 @@ public interface RecetaRepository extends JpaRepository<Receta, Long>, JpaSpecif
     // Métodos de consultas
     List<Receta> findByTituloContainingIgnoreCase(String titulo);
 
-    List<Receta> findByTipoDeCocina(String tipoDeCocina);
+    List<Receta> findByTipoDeCocinaIgnoreCase(String tipoDeCocina);
 
     List<Receta> findByIngredientesContainingIgnoreCase(String ingredientes);
 
-    List<Receta> findByPaisDeOrigen(String paisDeOrigen);
+    List<Receta> findByPaisDeOrigenIgnoreCase(String paisDeOrigen);
 
-    List<Receta> findByDificultad(String dificultad);
+    List<Receta> findByDificultadIgnoreCase(String dificultad);
 }
