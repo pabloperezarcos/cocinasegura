@@ -14,7 +14,7 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" th:href="@{/}">
                 Cocina Segura
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
@@ -24,13 +24,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/recetas">Recetas Populares</a>
+                        <a class="nav-link" th:href="@{/recetas}">Recetas Populares</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/buscar">Buscar Recetas</a>
+                        <a class="nav-link" th:href="@{/buscar}">Buscar Recetas</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-outline-light" href="/login">Iniciar Sesión</a>
+                        <a class="btn btn-outline-light" th:href="@{/login}">Iniciar Sesión</a>
                     </li>
                 </ul>
             </div>
@@ -51,7 +51,7 @@
                 <!-- Banner 1: Supermercado Jumbo -->
                 <div class="col-md-4">
                     <div class="card shadow-sm">
-                        <img src="/assets/jumbo.jpg" class="card-img-top" alt="Supermercado Jumbo">
+                        <img th:src="@{/assets/jumbo.jpg}" class="card-img-top" alt="Supermercado Jumbo">
                         <div class="card-body text-center">
                             <p class="card-text">Encuentra los ingredientes frescos para tus recetas favoritas en Jumbo
                                 Valparaíso. ¡Ofertas especiales cada semana!</p>
@@ -61,17 +61,17 @@
                 <!-- Banner 2: Olivares de Quebrada Alvarado -->
                 <div class="col-md-4">
                     <div class="card shadow-sm">
-                        <img src="/assets/aceite.jpg" class="card-img-top" alt="Aceite de Oliva Artesanal">
+                        <img th:src="@{/assets/aceite.jpg}" class="card-img-top" alt="Aceite de Oliva Artesanal">
                         <div class="card-body text-center">
                             <p class="card-text">Aceite de oliva artesanal directo del Valle de Aconcagua. Dale un toque
                                 especial a tus recetas con productos de alta calidad.</p>
                         </div>
                     </div>
                 </div>
-                <!-- Banner 3: Academia de Gastronomía Chef Ugarte -->
+                <!-- Banner 3: Academia de Gastronomía -->
                 <div class="col-md-4">
                     <div class="card shadow-sm">
-                        <img src="/assets/cursococina.jpg" class="card-img-top" alt="Curso de Cocina">
+                        <img th:src="@{/assets/cursococina.jpg}" class="card-img-top" alt="Curso de Cocina">
                         <div class="card-body text-center">
                             <p class="card-text">Aprende a cocinar como un profesional. Cursos de cocina para todos los
                                 niveles en Viña del Mar. ¡Inscríbete ahora!</p>
@@ -85,11 +85,15 @@
         <section id="recetas" class="row g-4">
             <div class="col-md-4" th:each="receta : ${recetas}">
                 <div class="card h-100 shadow-sm recipe-card">
-                    <img src="https://via.placeholder.com/300x200" th:src="@{${receta.imagenURL}}" class="card-img-top"
-                        alt="Imagen de la receta">
+                    <!-- Imagen de la receta con manejo de ruta -->
+                    <img th:src="@{${receta.imagenURL}}" class="card-img-top" alt="Imagen de la receta">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${receta.titulo}">Título de la receta</h5>
-                        <p class="card-text" th:text="${receta.descripcion}">Descripción de la receta</p>
+                        <!-- Muestra una descripción abreviada de las instrucciones -->
+                        <p class="card-text" th:text="${#strings.abbreviate(receta.instrucciones, 100)}">Descripción de
+                            la receta</p>
+                        <!-- Enlace a la página de detalles de la receta -->
+                        <a th:href="@{/recetas/{id}(id=${receta.id})}" class="btn btn-primary">Ver Detalles</a>
                     </div>
                 </div>
             </div>
