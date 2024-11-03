@@ -21,19 +21,23 @@
     <!-- Main Content -->
     <div class="container my-5">
         <h1 class="text-center mb-4">Buscar Recetas</h1>
-        <form action="#" method="get" class="mb-5">
+        <form th:action="@{/buscar}" method="get" class="mb-5">
             <div class="row g-3">
-                <!-- Nombre -->
+                <!-- Título -->
                 <div class="col-md-6">
-                    <label for="nombre" class="form-label">Nombre</label>
-                    <input type="text" id="nombre" name="nombre" class="form-control" placeholder="Ej: Paella">
+                    <label for="titulo" class="form-label">Título</label>
+                    <input type="text" id="titulo" name="titulo" class="form-control" placeholder="Ej: Paella">
                 </div>
 
                 <!-- Tipo de Cocina -->
                 <div class="col-md-6">
-                    <label for="tipoCocina" class="form-label">Tipo de Cocina</label>
-                    <input type="text" id="tipoCocina" name="tipoCocina" class="form-control"
-                        placeholder="Ej: Japonesa">
+                    <label for="tipoDeCocina" class="form-label">Tipo de Cocina</label>
+                    <select id="tipoDeCocina" name="tipoDeCocina" class="form-select">
+                        <option value="">Seleccione</option>
+                        <option value="Comida Chilena">Comida Chilena</option>
+                        <option value="Bebida Chilena">Bebida Chilena</option>
+                        <option value="Postre Chileno">Postre Chileno</option>
+                    </select>
                 </div>
 
                 <!-- Ingredientes -->
@@ -45,8 +49,11 @@
 
                 <!-- País de Origen -->
                 <div class="col-md-6">
-                    <label for="paisOrigen" class="form-label">País de Origen</label>
-                    <input type="text" id="paisOrigen" name="paisOrigen" class="form-control" placeholder="Ej: España">
+                    <label for="paisDeOrigen" class="form-label">País de Origen</label>
+                    <select id="paisDeOrigen" name="paisDeOrigen" class="form-select">
+                        <option value="">Seleccione</option>
+                        <option value="Chile">Chile</option>
+                    </select>
                 </div>
 
                 <!-- Dificultad -->
@@ -63,28 +70,46 @@
 
             <!-- Botón de Búsqueda -->
             <div class="text-center mt-4">
-                <input type="submit" value="Buscar" class="btn btn-primary px-4">
+                <button type="submit" class="btn btn-primary px-4">Buscar</button>
             </div>
         </form>
 
         <!-- Resultados de Búsqueda -->
-        <h2 class="text-center mb-4">Resultados de la Búsqueda</h2>
-        <ul class="list-group">
-            <li class="list-group-item">
-                <h3 class="mb-1">Paella</h3>
-                <p class="mb-1"><strong>Tipo de Cocina:</strong> Española</p>
-                <p class="mb-1"><strong>Ingredientes:</strong> Arroz, Mariscos, Azafrán</p>
-                <p class="mb-1"><strong>País de Origen:</strong> España</p>
-                <p class="mb-1"><strong>Dificultad:</strong> Media</p>
-            </li>
-            <li class="list-group-item">
-                <h3 class="mb-1">Sushi</h3>
-                <p class="mb-1"><strong>Tipo de Cocina:</strong> Japonesa</p>
-                <p class="mb-1"><strong>Ingredientes:</strong> Arroz, Pescado, Algas</p>
-                <p class="mb-1"><strong>País de Origen:</strong> Japón</p>
-                <p class="mb-1"><strong>Dificultad:</strong> Difícil</p>
-            </li>
-        </ul>
+        <div th:if="${recetas}">
+            <h2 class="text-center mb-4">Resultados de la Búsqueda</h2>
+
+            <div th:if="${recetas.size() > 0}">
+                <div class="list-group">
+                    <div th:each="receta : ${recetas}" class="list-group-item list-group-item-action mb-3">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <img th:src="${receta.imagenURL}" alt="Imagen de la Receta" class="img-fluid rounded">
+                            </div>
+                            <div class="col-md-8">
+                                <h3 th:text="${receta.titulo}">Título de la Receta</h3>
+                                <p><strong>Dificultad:</strong> <span th:text="${receta.dificultad}">Dificultad</span>
+                                </p>
+                                <p><strong>Ingredientes:</strong> <span
+                                        th:text="${receta.ingredientes}">Ingredientes</span></p>
+                                <p><strong>Instrucciones:</strong> <span
+                                        th:text="${receta.instrucciones}">Instrucciones</span></p>
+                                <p><strong>País de Origen:</strong> <span th:text="${receta.paisDeOrigen}">País</span>
+                                </p>
+                                <p><strong>Tiempo de Cocción:</strong> <span
+                                        th:text="${receta.tiempoDeCoccion}">Tiempo</span></p>
+                                <p><strong>Tipo de Cocina:</strong> <span th:text="${receta.tipoDeCocina}">Tipo</span>
+                                </p>
+                                <p><strong>Descripción:</strong> <span
+                                        th:text="${receta.descripcion}">Descripción</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${recetas.size() == 0}">
+                <p class="text-center">No se encontraron recetas que coincidan con los criterios de búsqueda.</p>
+            </div>
+        </div>
 
         <!-- Enlace al Inicio -->
         <div class="text-center mt-4">
