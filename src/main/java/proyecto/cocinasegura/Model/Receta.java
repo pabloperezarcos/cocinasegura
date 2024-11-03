@@ -16,7 +16,6 @@ public class Receta {
     @Column(name = "tipo_de_cocina", nullable = false, length = 50)
     private String tipoDeCocina;
 
-    @Lob
     @Column(name = "ingredientes", nullable = false)
     private String ingredientes;
 
