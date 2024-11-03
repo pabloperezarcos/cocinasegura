@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import proyecto.cocinasegura.Model.Receta;
-import proyecto.cocinasegura.Repository.RecetaRepository; // Asegúrate de crear este repositorio
+import proyecto.cocinasegura.Repository.RecetaRepository;
 
 import java.util.List;
 
