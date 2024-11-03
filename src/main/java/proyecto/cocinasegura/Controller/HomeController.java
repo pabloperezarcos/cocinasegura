@@ -1,5 +1,6 @@
 package proyecto.cocinasegura.Controller;
 
+//import org.apache.el.stream.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,6 +11,7 @@ import proyecto.cocinasegura.Repository.RecetaRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class HomeController {
@@ -58,10 +60,19 @@ public class HomeController {
         return "buscar";
     }
 
-    // Mapeo para ingresar a recetas
+    // Mapeo para la página de recetas
     @GetMapping("/recetas")
-    public String recetas() {
-        return "recetas";
+    public String mostrarRecetas(Model model, @RequestParam(value = "id", required = false) Long id) {
+        List<Receta> recetas = recetaRepository.findAll();
+        model.addAttribute("recetas", recetas);
+
+        // Si se proporciona un ID, buscamos la receta específica y la añadimos al
+        // modelo
+        if (id != null) {
+            Optional<Receta> recetaSeleccionada = recetaRepository.findById(id);
+            recetaSeleccionada.ifPresent(receta -> model.addAttribute("recetaSeleccionada", receta));
+        }
+        return "recetas"; // Asegúrate de que este nombre coincide con tu archivo recetas.html
     }
 
     // Mapeo para ingresar al login
