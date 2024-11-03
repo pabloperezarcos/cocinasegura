@@ -81,12 +81,14 @@
             </div>
         </section>
 
+        <h2 class="text-center mb-4">Recetas Populares</h2>
+
         <!-- Recetas Populares -->
         <section id="recetas" class="row g-4">
             <div class="col-md-4" th:each="receta : ${recetas}">
                 <div class="card h-100 shadow-sm recipe-card">
                     <!-- Imagen de la receta con manejo de ruta -->
-                    <img th:src="@{${receta.imagenURL}}" class="card-img-top" alt="Imagen de la receta">
+                    <img th:src="@{${receta.imagenURL}}" class="card-img-top recipe-image" alt="Imagen de la receta">
                     <div class="card-body">
                         <h5 class="card-title" th:text="${receta.titulo}">Título de la receta</h5>
                         <!-- Muestra una descripción abreviada de las instrucciones -->
@@ -98,6 +100,7 @@
                 </div>
             </div>
         </section>
+
     </main>
 
     <!-- Footer -->

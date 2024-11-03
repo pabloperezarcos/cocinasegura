@@ -35,13 +35,16 @@ public class Receta {
     @Column(name = "imagen_url", length = 255)
     private String imagenURL;
 
+    @Column(name = "descripcion", nullable = false, length = 1000)
+    private String descripcion;
+
     // Constructor vacío
     public Receta() {
     }
 
     // Constructor
     public Receta(String titulo, String tipoDeCocina, String ingredientes, String paisDeOrigen,
-            String dificultad, String instrucciones, String tiempoDeCoccion, String imagenURL) {
+            String dificultad, String instrucciones, String tiempoDeCoccion, String imagenURL, String descripcion) {
         this.titulo = titulo;
         this.tipoDeCocina = tipoDeCocina;
         this.ingredientes = ingredientes;
@@ -50,6 +53,7 @@ public class Receta {
         this.instrucciones = instrucciones;
         this.tiempoDeCoccion = tiempoDeCoccion;
         this.imagenURL = imagenURL;
+        this.descripcion = descripcion;
     }
 
     // Getters
@@ -89,6 +93,10 @@ public class Receta {
         return imagenURL;
     }
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+
     // Setters
     public void setTitulo(String titulo) {
         this.titulo = titulo;
@@ -120,6 +128,10 @@ public class Receta {
 
     public void setImagenURL(String imagenURL) {
         this.imagenURL = imagenURL;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
 }

@@ -26,7 +26,7 @@ public class HomeController {
     }
 
     // Método para mostrar la lista de recetas con funcionalidad de búsqueda
-    @GetMapping("/recetas")
+    @GetMapping("/buscar")
     public String recetas(Model model,
             @RequestParam(value = "titulo", required = false) String titulo,
             @RequestParam(value = "tipoDeCocina", required = false) String tipoDeCocina,
@@ -55,24 +55,18 @@ public class HomeController {
         }
 
         model.addAttribute("recetas", listaRecetas);
-        return "recetas";
+        return "buscar";
     }
 
-    // Mapeo para manejar la búsqueda de recetas
-    @GetMapping("/buscar")
-    public String buscar(Model model,
-            @RequestParam(value = "titulo", required = false) String titulo,
-            @RequestParam(value = "tipoDeCocina", required = false) String tipoDeCocina,
-            @RequestParam(value = "ingredientes", required = false) String ingredientes,
-            @RequestParam(value = "paisDeOrigen", required = false) String paisDeOrigen,
-            @RequestParam(value = "dificultad", required = false) String dificultad) {
-        // Redirige a /recetas con los parámetros de búsqueda
-        return recetas(model, titulo, tipoDeCocina, ingredientes, paisDeOrigen, dificultad);
+    // Mapeo para ingresar a recetas
+    @GetMapping("/recetas")
+    public String recetas() {
+        return "recetas";
     }
 
     // Mapeo para ingresar al login
     @GetMapping("/login")
     public String login() {
-        return "login"; // Nombre de la plantilla HTML para login
+        return "login";
     }
 }

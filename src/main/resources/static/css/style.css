@@ -24,6 +24,19 @@ body {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
+/* Estilos para las imágenes de las recetas */
+.recipe-image {
+    width: 100%;
+    /* Ocupa todo el ancho de la tarjeta */
+    height: 200px;
+    /* Altura fija para uniformidad */
+    object-fit: cover;
+    /* Recorta y centra la imagen sin distorsionarla */
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+
 /* Card Titles */
 .card-title {
     color: #e63946;
