@@ -74,10 +74,4 @@ public class HomeController {
         }
         return "recetas"; // Asegúrate de que este nombre coincide con tu archivo recetas.html
     }
-
-    // Mapeo para ingresar al login
-    @GetMapping("/login")
-    public String login() {
-        return "login";
-    }
 }
