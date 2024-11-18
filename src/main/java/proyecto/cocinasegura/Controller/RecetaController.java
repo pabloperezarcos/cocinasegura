@@ -7,6 +7,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 //import org.springframework.http.HttpHeaders;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import proyecto.cocinasegura.Model.Receta;
 import proyecto.cocinasegura.Repository.RecetaRepository;
@@ -125,25 +126,37 @@ public class RecetaController {
     }
 
     @PostMapping("/{id}/video")
-    public ResponseEntity<String> agregarVideo(@PathVariable Long id, @RequestParam String videoURL) {
+    public ResponseEntity<?> agregarVideo(@PathVariable Long id, @RequestParam String videoURL,
+            RedirectAttributes redirectAttributes) {
         Optional<Receta> recetaOpt = recetaRepository.findById(id);
 
         if (recetaOpt.isPresent()) {
             Receta receta = recetaOpt.get();
 
             // Validar que la URL sea de YouTube
-            if (!videoURL.contains("youtube.com/watch?v=")) {
-                return ResponseEntity.badRequest().body("La URL proporcionada no es válida.");
+            if (!videoURL.contains("youtube.com/watch?v=") && !videoURL.contains("youtu.be/")) {
+                redirectAttributes.addFlashAttribute("error", "La URL proporcionada no es válida.");
+                return ResponseEntity.status(302)
+                        .header("Location", "/recetas?id=" + id)
+                        .build();
             }
 
             // Agregar la URL del video
             receta.setVideoURL(videoURL);
             recetaRepository.save(receta);
 
-            return ResponseEntity.ok("Video agregado correctamente.");
+            // Redirigir a la misma página con un mensaje de éxito
+            redirectAttributes.addFlashAttribute("mensaje", "Video agregado correctamente.");
+            return ResponseEntity.status(302)
+                    .header("Location", "/recetas?id=" + id)
+                    .build();
         }
 
-        return ResponseEntity.status(404).body("Receta no encontrada.");
+        // Si la receta no se encuentra
+        redirectAttributes.addFlashAttribute("error", "Receta no encontrada.");
+        return ResponseEntity.status(302)
+                .header("Location", "/recetas")
+                .build();
     }
 
 }
