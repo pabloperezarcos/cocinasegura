@@ -6,9 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="
     default-src 'self'; 
-    script-src 'self' https://cdn.jsdelivr.net; 
+    script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; 
     style-src 'self' https://cdn.jsdelivr.net; 
-    img-src 'self' data:;">
+    img-src 'self' data:; 
+    frame-src 'self' https://www.youtube.com;">
     <title>Recetas - Cocina Segura</title>
     <!-- Bootstrap CSS -->
     <link th:href="@{/css/css/bootstrap.min.css}" rel="stylesheet">
@@ -47,7 +48,7 @@
     <!-- Contenido principal -->
     <div class="container my-5">
         <!-- Mensaje de éxito -->
-        <div id="mensaje" style="display: none; color: green; font-weight: bold; margin-bottom: 20px;"></div>
+        <!--         <div id="mensaje" style="display: none; color: green; font-weight: bold; margin-bottom: 20px;"></div>
 
         <script>
             document.addEventListener("DOMContentLoaded", function () {
@@ -59,8 +60,8 @@
                     mensajeDiv.style.display = 'block';
                 }
             });
-        </script>
-        
+        </script> -->
+
         <h1 class="mb-4 text-center">Recetas Disponibles</h1>
 
         <!-- Mostrar mensajes de error -->
@@ -96,6 +97,19 @@
                                 th:text="${instruccion}"></li>
                         </ul>
                     </div>
+
+                    <!-- Mostrar el video dentro de un iframe -->
+                    <div class="mt-4" th:if="${recetaSeleccionada.videoURL != null}">
+                        <h5>Video de la receta:</h5>
+                        <iframe class="embed-responsive-item"
+                            th:src="'https://www.youtube.com/embed/' + (${recetaSeleccionada.videoURL.contains('youtu.be') ? recetaSeleccionada.videoURL.split('youtu.be/')[1] : recetaSeleccionada.videoURL.split('v=')[1].split('&')[0]})"
+                            width="560" height="315" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+
+                    <!-- Compartir en redes sociales -->
                     <div class="mt-4 text-center">
                         <a th:href="'https://wa.me/?text=Mira%20esta%20receta:%20' + @{/recetas(id=${recetaSeleccionada.id})}"
                             class="btn btn-success me-2" target="_blank">WhatsApp</a>
@@ -104,6 +118,20 @@
                         <a th:href="'https://twitter.com/intent/tweet?url=' + @{/recetas(id=${recetaSeleccionada.id})}"
                             class="btn btn-info" target="_blank">Twitter</a>
                     </div>
+                    <br>
+                    <!-- Formulario para agregar video -->
+                    <div sec:authorize="isAuthenticated()">
+                        <h5>Agregar video a esta receta:</h5>
+                        <form th:action="@{/api/recetas/{id}/video(id=${recetaSeleccionada.id})}" method="post">
+                            <div class="mb-3">
+                                <label for="videoURL" class="form-label">URL del Video (YouTube)</label>
+                                <input type="url" id="videoURL" name="videoURL" class="form-control"
+                                    placeholder="https://www.youtube.com/watch?v=XXXXXX" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Agregar Video</button>
+                        </form>
+                    </div>
+                    <br>
                     <!-- Comentarios -->
                     <h5>Comentarios:</h5>
                     <div th:if="${comentarios != null && !#lists.isEmpty(comentarios)}">
