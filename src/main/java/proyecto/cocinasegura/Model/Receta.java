@@ -37,6 +37,9 @@ public class Receta {
     @Column(name = "imagen_url", length = 2083) // Longitud máxima de una URL
     private String imagenURL;
 
+    @Column(name = "video_url", length = 2083) // Longitud máxima de una URL
+    private String videoURL;
+
     @Column(name = "descripcion", nullable = false, length = 1000)
     private String descripcion;
 
@@ -58,7 +61,7 @@ public class Receta {
 
     // Constructor con parámetros
     public Receta(String titulo, String tipoDeCocina, String ingredientes, String paisDeOrigen,
-            String dificultad, String instrucciones, String tiempoDeCoccion, String imagenURL, String descripcion) {
+            String dificultad, String instrucciones, String tiempoDeCoccion, String imagenURL,String videoURL, String descripcion) {
         this.titulo = titulo;
         this.tipoDeCocina = tipoDeCocina;
         this.ingredientes = ingredientes;
@@ -68,6 +71,7 @@ public class Receta {
         this.tiempoDeCoccion = tiempoDeCoccion;
         this.imagenURL = imagenURL;
         this.descripcion = descripcion;
+        this.videoURL = videoURL;
     }
 
     // Getters y Setters para todos los campos
@@ -137,6 +141,14 @@ public class Receta {
 
     public void setImagenURL(String imagenURL) {
         this.imagenURL = imagenURL;
+    }
+
+    public String getVideoURL() {
+        return videoURL;
+    }
+
+    public void setVideoURL(String videoURL) {
+        this.videoURL = videoURL;
     }
 
     public String getDescripcion() {
