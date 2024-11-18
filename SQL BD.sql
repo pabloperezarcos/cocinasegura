@@ -310,3 +310,17 @@ WHERE id = 4;
 UPDATE usuarios
 SET contrasena = '$2a$12$06VZ0nR/0cRYA/3JPlywt.PrwNUiSV8uM4g5xxvqx8ec.C2talfDe' 
 WHERE id = 5;
+
+
+
+CREATE TABLE receta_fotos (
+    receta_id NUMBER(19, 0) NOT NULL,
+    foto_url VARCHAR2(255 CHAR) NOT NULL,
+    CONSTRAINT fk_receta_fotos FOREIGN KEY (receta_id) REFERENCES recetas (id) ON DELETE CASCADE
+);
+
+CREATE TABLE receta_videos (
+    receta_id NUMBER(19, 0) NOT NULL,
+    video_url VARCHAR2(255 CHAR) NOT NULL,
+    CONSTRAINT fk_receta_videos FOREIGN KEY (receta_id) REFERENCES recetas (id) ON DELETE CASCADE
+);
