@@ -8,7 +8,7 @@
     default-src 'self'; 
     script-src 'self' https://cdn.jsdelivr.net; 
     style-src 'self' https://cdn.jsdelivr.net; 
-    img-src 'self' data:;">
+    img-src 'self' data:;">
     <title>Recetas - Cocina Segura</title>
     <!-- Bootstrap CSS -->
     <link th:href="@{/css/css/bootstrap.min.css}" rel="stylesheet">
@@ -87,13 +87,20 @@
                         <li th:each="instrucciones : ${#strings.arraySplit(recetaSeleccionada.instrucciones, '.')}"
                             th:text="${instrucciones}">Instrucciones</li>
                     </ul>
+                    <hr>
+                    <!-- Botones de compartir -->
+                    <div class="share-buttons text-center">
+                        <a th:href="'https://wa.me/?text=Mira%20esta%20receta:%20' + @{/recetas(id=${receta.id})}"
+                            target="_blank" class="btn btn-success">WhatsApp</a>
+                        <a th:href="'https://www.facebook.com/sharer/sharer.php?u=' + @{/recetas(id=${receta.id})}"
+                            target="_blank" class="btn btn-primary">Facebook</a>
+                        <a th:href="'https://twitter.com/intent/tweet?text=Mira%20esta%20receta:%20&url=' + @{/recetas(id=${receta.id})}"
+                            target="_blank" class="btn btn-info">Twitter</a>
+                    </div>
                 </div>
                 <a th:href="@{/recetas}" class="btn btn-secondary mt-3">Volver a la lista de recetas</a>
             </div>
         </div>
-
-
-
 
         <!-- Mostrar lista completa si no hay receta seleccionada -->
         <div th:if="${recetaSeleccionada == null}" class="row">
@@ -104,6 +111,16 @@
                         <h5 class="card-title" th:text="${receta.titulo}">Título de la receta</h5>
                         <p class="card-text" th:text="${receta.descripcion}">Descripción de la receta</p>
                         <a th:href="@{/recetas(id=${receta.id})}" class="btn btn-primary">Ver Detalles</a>
+                        <hr>
+                        <!-- Botones de compartir -->
+                        <div class="share-buttons text-center">
+                            <a th:href="'https://wa.me/?text=Mira%20esta%20receta:%20' + @{/recetas(id=${receta.id})}"
+                                target="_blank" class="btn btn-success">WhatsApp</a>
+                            <a th:href="'https://www.facebook.com/sharer/sharer.php?u=' + @{/recetas(id=${receta.id})}"
+                                target="_blank" class="btn btn-primary">Facebook</a>
+                            <a th:href="'https://twitter.com/intent/tweet?text=Mira%20esta%20receta:%20&url=' + @{/recetas(id=${receta.id})}"
+                                target="_blank" class="btn btn-info">Twitter</a>
+                        </div>
                     </div>
                 </div>
             </div>
