@@ -26,7 +26,7 @@ public class Usuario implements UserDetails {
     private String contrasena;
 
     @Column(name = "roles", nullable = false, length = 255)
-    private String roles; // Almacena roles como una cadena separada por comas
+    private String roles;
 
     // Getters
 
@@ -110,5 +110,11 @@ public class Usuario implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    // Sobrescribir el método toString()
+    @Override
+    public String toString() {
+        return this.nombreUsuario;
     }
 }
