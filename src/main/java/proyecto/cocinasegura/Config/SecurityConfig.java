@@ -18,6 +18,8 @@ import org.springframework.session.web.http.CookieHttpSessionIdResolver;
 import org.springframework.session.web.http.DefaultCookieSerializer;
 
 @Configuration
+
+
 public class SecurityConfig {
 
         @Autowired
