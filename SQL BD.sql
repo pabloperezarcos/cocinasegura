@@ -758,16 +758,36 @@ CREATE TABLE comentarios (
 );
 
 ALTER TABLE
+    RECETAS
+ADD
+    "VIDEO_URL" VARCHAR(255);
+
+ALTER TABLE
     COMENTARIOS RENAME TO COMENTARIO;
 
 -- Modificar longitud de las columnas URL
-ALTER TABLE receta_fotos MODIFY foto_url VARCHAR2(2083 CHAR);
-ALTER TABLE receta_videos MODIFY video_url VARCHAR2(2083 CHAR);
+ALTER TABLE
+    receta_fotos
+MODIFY
+    foto_url VARCHAR2(2083 CHAR);
+
+ALTER TABLE
+    receta_videos
+MODIFY
+    video_url VARCHAR2(2083 CHAR);
 
 -- Crear índices para mejorar el rendimiento de las consultas
 CREATE INDEX idx_receta_fotos_receta_id ON receta_fotos (receta_id);
+
 CREATE INDEX idx_receta_videos_receta_id ON receta_videos (receta_id);
 
 -- Agregar restricciones únicas para evitar duplicados
-ALTER TABLE receta_fotos ADD CONSTRAINT unique_foto_url UNIQUE (receta_id, foto_url);
-ALTER TABLE receta_videos ADD CONSTRAINT unique_video_url UNIQUE (receta_id, video_url);
+ALTER TABLE
+    receta_fotos
+ADD
+    CONSTRAINT unique_foto_url UNIQUE (receta_id, foto_url);
+
+ALTER TABLE
+    receta_videos
+ADD
+    CONSTRAINT unique_video_url UNIQUE (receta_id, video_url);
