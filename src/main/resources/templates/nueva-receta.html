@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sube tu Receta</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:href="@{/css/css/bootstrap.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" th:href="@{/}">
+                Cocina Segura
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/recetas}">Recetas Populares</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/buscar}">Buscar Recetas</a>
+                    </li>
+                    <!-- Mostrar opción de "Sube tu receta!" solo si el usuario está autenticado -->
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="nav-link" th:href="@{/recetas/nueva}">Sube tu receta!</a>
+                    </li>
+                    <!-- Mostrar "Iniciar Sesión" si el usuario no está autenticado -->
+                    <li class="nav-item" sec:authorize="isAnonymous()">
+                        <a class="btn btn-outline-light" th:href="@{/login}">Iniciar Sesión</a>
+                    </li>
+                    <!-- Mostrar "Cerrar Sesión" si el usuario está autenticado -->
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <form th:action="@{/logout}" method="post">
+                            <button type="submit" class="btn btn-outline-light">Cerrar Sesión</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container my-5">
+        <h1 class="text-center mb-4">Sube tu Receta</h1>
+        <form th:action="@{/api/recetas}" method="post" enctype="application/x-www-form-urlencoded">
+            <div class="mb-3">
+                <label for="titulo" class="form-label">Título</label>
+                <input type="text" id="titulo" name="titulo" class="form-control" placeholder="Ej: Paella Valenciana"
+                    required>
+            </div>
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <textarea id="descripcion" name="descripcion" class="form-control"
+                    placeholder="Descripción breve de la receta" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="tipoDeCocina" class="form-label">Tipo de Cocina</label>
+                <input type="text" id="tipoDeCocina" name="tipoDeCocina" class="form-control" placeholder="Ej: Española"
+                    required>
+            </div>
+            <div class="mb-3">
+                <label for="ingredientes" class="form-label">Ingredientes</label>
+                <textarea id="ingredientes" name="ingredientes" class="form-control"
+                    placeholder="Lista de ingredientes separados por comas" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="paisDeOrigen" class="form-label">País de Origen</label>
+                <input type="text" id="paisDeOrigen" name="paisDeOrigen" class="form-control" placeholder="Ej: España"
+                    required>
+            </div>
+            <div class="mb-3">
+                <label for="dificultad" class="form-label">Dificultad</label>
+                <select id="dificultad" name="dificultad" class="form-select" required>
+                    <option value="">Selecciona</option>
+                    <option value="Fácil">Fácil</option>
+                    <option value="Mediana">Mediana</option>
+                    <option value="Difícil">Difícil</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="instrucciones" class="form-label">Instrucciones</label>
+                <textarea id="instrucciones" name="instrucciones" class="form-control"
+                    placeholder="Paso a paso de la receta" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="imagenURL" class="form-label">URL de la Imagen</label>
+                <input type="url" id="imagenURL" name="imagenURL" class="form-control"
+                    placeholder="http://example.com/imagen.jpg">
+            </div>
+            <button type="submit" class="btn btn-primary">Subir Receta</button>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4">
+        <div class="container">
+            <p class="mb-0">&copy; 2024 Cocina Segura</p>
+        </div>
+    </footer>
+</body>
+
+</html>
