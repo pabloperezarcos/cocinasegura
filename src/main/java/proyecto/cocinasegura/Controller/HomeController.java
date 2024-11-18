@@ -70,21 +70,27 @@ public class HomeController {
     // Mapeo para la página de recetas
     @GetMapping("/recetas")
     public String mostrarRecetas(Model model, @RequestParam(value = "id", required = false) Long id) {
+        // Obtener todas las recetas y añadirlas al modelo
         List<Receta> recetas = recetaRepository.findAll();
         model.addAttribute("recetas", recetas);
 
-        // Si se proporciona un ID, buscamos la receta específica y la añadimos al
-        // modelo
         if (id != null) {
+            // Buscar la receta seleccionada
             Optional<Receta> recetaSeleccionada = recetaRepository.findById(id);
-            recetaSeleccionada.ifPresent(receta -> model.addAttribute("recetaSeleccionada", receta));
 
-            // Usar el ComentarioRepository para obtener comentarios relacionados con la
-            // receta
-            List<Comentario> comentarios = comentarioRepository.findByRecetaId(id);
-            model.addAttribute("comentarios", comentarios);
+            if (recetaSeleccionada.isPresent()) {
+                model.addAttribute("recetaSeleccionada", recetaSeleccionada.get());
+
+                // Obtener comentarios relacionados con la receta seleccionada
+                List<Comentario> comentarios = comentarioRepository.findByRecetaId(id);
+                model.addAttribute("comentarios", comentarios);
+            } else {
+                // Si no se encuentra la receta, añade un mensaje de error
+                model.addAttribute("error", "No se encontró la receta con ID: " + id);
+            }
         }
-        return "recetas"; // Asegúrate de que este nombre coincide con tu archivo recetas.html
+
+        return "recetas"; // Retornar la vista correspondiente
     }
 
     // Mapeo para recetas nuevas
