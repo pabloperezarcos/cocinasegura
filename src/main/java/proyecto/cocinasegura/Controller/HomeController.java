@@ -2,6 +2,7 @@ package proyecto.cocinasegura.Controller;
 
 //import org.apache.el.stream.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -74,4 +75,14 @@ public class HomeController {
         }
         return "recetas"; // Asegúrate de que este nombre coincide con tu archivo recetas.html
     }
+
+    // Mapeo para recetas nuevas
+    @GetMapping("/recetas/nueva")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public String mostrarFormularioNuevaReceta(Model model) {
+        model.addAttribute("receta", new Receta());
+        return "nueva-receta";
+    }
+    
+
 }
