@@ -19,19 +19,31 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a class="navbar-brand" th:href="@{/}">Cocina Segura</a>
+            <a class="navbar-brand" th:href="@{/}">
+                Cocina Segura
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav me-auto">
-                    <li class="nav-item">
-                        <a class="nav-link active" th:href="@{/recetas}">Recetas</a>
-                    </li>
-                </ul>
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
+                        <a class="nav-link" th:href="@{/recetas}">Recetas Populares</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/buscar}">Buscar Recetas</a>
+                    </li>
+                    <!-- Mostrar opción de "Sube tu receta!" solo si el usuario está autenticado -->
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
+                        <a class="nav-link" th:href="@{/recetas/nueva}">Sube tu receta!</a>
+                    </li>
+                    <!-- Mostrar "Iniciar Sesión" si el usuario no está autenticado -->
+                    <li class="nav-item" sec:authorize="isAnonymous()">
+                        <a class="btn btn-outline-light" th:href="@{/login}">Iniciar Sesión</a>
+                    </li>
+                    <!-- Mostrar "Cerrar Sesión" si el usuario está autenticado -->
+                    <li class="nav-item" sec:authorize="isAuthenticated()">
                         <form th:action="@{/logout}" method="post">
                             <button type="submit" class="btn btn-outline-light">Cerrar Sesión</button>
                         </form>
