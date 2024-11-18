@@ -46,6 +46,21 @@
 
     <!-- Contenido principal -->
     <div class="container my-5">
+        <!-- Mensaje de éxito -->
+        <div id="mensaje" style="display: none; color: green; font-weight: bold; margin-bottom: 20px;"></div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const urlParams = new URLSearchParams(window.location.search);
+                const mensaje = urlParams.get('mensaje');
+                if (mensaje) {
+                    const mensajeDiv = document.getElementById('mensaje');
+                    mensajeDiv.textContent = mensaje;
+                    mensajeDiv.style.display = 'block';
+                }
+            });
+        </script>
+        
         <h1 class="mb-4 text-center">Recetas Disponibles</h1>
 
         <!-- Mostrar mensajes de error -->
