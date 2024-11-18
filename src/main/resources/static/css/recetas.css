@@ -1,22 +1,31 @@
-/* Estilos para las imágenes de las recetas */
-.recipe-image {
+/* Estilos generales */
+body {
+    font-family: Arial, sans-serif;
+}
+
+/* Estilos de la imagen */
+.recipe-image,
+.recipe-image2 {
     width: 100%;
-    /* Ocupa todo el ancho de la tarjeta */
     height: 200px;
-    /* Altura fija para uniformidad */
     object-fit: cover;
-    /* Recorta y centra la imagen sin distorsionarla */
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+    border-radius: 10px;
 }
 
 .recipe-image2 {
-    width: 50%;
-    /* Ocupa todo el ancho de la tarjeta */
     height: 300px;
-    /* Altura fija para uniformidad */
-    object-fit: cover;
-    /* Recorta y centra la imagen sin distorsionarla */
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+}
+
+/* Estilos de las tarjetas */
+.card {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.card-title {
+    font-weight: bold;
+}
+
+.card-body {
+    text-align: center;
 }
