@@ -22,6 +22,11 @@ public class Comentario {
     private String texto;
 
     @Column(nullable = false)
+    @Min(1)
+    @Max(5)
+    private Integer valoracion;
+    
+    @Column(nullable = false)
     private LocalDateTime fecha;
 
     // Getters y Setters
@@ -55,6 +60,14 @@ public class Comentario {
 
     public void setTexto(String texto) {
         this.texto = texto;
+    }
+
+    public int getValoracion() {
+        return valoracion;
+    }
+
+    public void setValoracion(int valoracion) {
+        this.valoracion = valoracion;
     }
 
     public LocalDateTime getFecha() {

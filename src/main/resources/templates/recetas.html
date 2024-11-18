@@ -48,6 +48,9 @@
     <div class="container my-5">
         <h1 class="mb-4 text-center">Recetas Disponibles</h1>
 
+        <!-- Mostrar mensajes de error -->
+        <p th:if="${error != null}" class="alert alert-danger text-center" th:text="${error}"></p>
+
         <!-- Receta seleccionada -->
         <div th:if="${recetaSeleccionada != null}" class="d-flex justify-content-center">
             <div class="card shadow-lg" style="width: 50%;">
@@ -88,7 +91,7 @@
                     </div>
                     <!-- Comentarios -->
                     <h5>Comentarios:</h5>
-                    <div th:if="${comentarios != null}">
+                    <div th:if="${comentarios != null && !#lists.isEmpty(comentarios)}">
                         <div class="list-group">
                             <div th:each="comentario : ${comentarios}" class="list-group-item">
                                 <p><strong>Usuario:</strong> <span th:text="${comentario.usuario}"></span></p>
@@ -97,13 +100,16 @@
                             </div>
                         </div>
                     </div>
-                    <p th:if="${comentarios == null}">Aún no hay comentarios para esta receta.</p>
+                    <p th:if="${comentarios == null || #lists.isEmpty(comentarios)}">No hay comentarios para esta
+                        receta.</p>
                     <hr>
                     <!-- Formulario para agregar un comentario -->
                     <div sec:authorize="isAuthenticated()">
                         <h5>Deja tu comentario:</h5>
-                        <form th:action="@{/api/comentarios}" method="post">
-                            <input type="hidden" name="recetaId" th:value="${recetaSeleccionada.id}">
+                        <form th:action="@{/api/comentarios/{recetaId}(recetaId=${recetaSeleccionada.id})}"
+                            method="post">
+                            <!-- <input type="hidden" name="recetaId" th:value="${recetaSeleccionada.id}"> -->
+                            <input type="hidden" name="usuarioId" th:value="${#authentication.principal.id}" />
                             <div class="mb-3">
                                 <label for="comentario" class="form-label">Comentario</label>
                                 <textarea id="comentario" name="texto" class="form-control" rows="3"
@@ -119,6 +125,7 @@
                                     <option value="5">5 - Excelente</option>
                                 </select>
                             </div>
+
                             <button type="submit" class="btn btn-primary">Enviar</button>
                         </form>
                     </div>

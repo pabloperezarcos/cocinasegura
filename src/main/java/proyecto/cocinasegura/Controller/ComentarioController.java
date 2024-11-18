@@ -39,7 +39,9 @@ public class ComentarioController {
     @PreAuthorize("isAuthenticated()")
     public ResponseEntity<String> agregarComentario(@PathVariable Long recetaId,
             @RequestParam String texto,
-            @RequestParam Long usuarioId) {
+            @RequestParam Long usuarioId,
+            @RequestParam Integer valoracion) {
+        System.out.println("Valoración recibida: " + valoracion); // Para verificar si llega
         Receta receta = recetaRepository.findById(recetaId).orElse(null);
         Usuario usuario = usuarioRepository.findById(usuarioId).orElse(null);
 
@@ -47,13 +49,19 @@ public class ComentarioController {
             return ResponseEntity.badRequest().body("Receta o Usuario no encontrado.");
         }
 
+        if (valoracion == null || valoracion < 1 || valoracion > 5) {
+            return ResponseEntity.badRequest().body("La valoración debe estar entre 1 y 5.");
+        }
+
         Comentario comentario = new Comentario();
         comentario.setReceta(receta);
         comentario.setUsuario(usuario);
         comentario.setTexto(texto);
         comentario.setFecha(LocalDateTime.now());
+        comentario.setValoracion(valoracion); // Establece la valoración
 
         comentarioRepository.save(comentario);
         return ResponseEntity.ok("Comentario agregado exitosamente.");
     }
+
 }
