@@ -1,6 +1,8 @@
 package proyecto.cocinasegura.Model;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "Recetas")
@@ -41,6 +43,18 @@ public class Receta {
     // Constructor vacío
     public Receta() {
     }
+
+    // Campo adicional para las fotos
+    @ElementCollection
+    @CollectionTable(name = "receta_fotos", joinColumns = @JoinColumn(name = "receta_id"))
+    @Column(name = "foto_url")
+    private List<String> fotos = new ArrayList<>();
+
+    // Campo adicional para los videos
+    @ElementCollection
+    @CollectionTable(name = "receta_videos", joinColumns = @JoinColumn(name = "receta_id"))
+    @Column(name = "video_url")
+    private List<String> videos = new ArrayList<>();
 
     // Constructor
     public Receta(String titulo, String tipoDeCocina, String ingredientes, String paisDeOrigen,
@@ -97,6 +111,14 @@ public class Receta {
         return descripcion;
     }
 
+    public List<String> getFotos() {
+        return fotos;
+    }
+
+    public List<String> getVideos() {
+        return videos;
+    }
+
     // Setters
     public void setTitulo(String titulo) {
         this.titulo = titulo;
@@ -132,6 +154,14 @@ public class Receta {
 
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
+    }
+
+    public void setFotos(List<String> fotos) {
+        this.fotos = fotos;
+    }
+
+    public void setVideos(List<String> videos) {
+        this.videos = videos;
     }
 
 }
