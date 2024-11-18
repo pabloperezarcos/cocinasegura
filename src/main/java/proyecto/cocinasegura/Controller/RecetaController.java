@@ -1,10 +1,13 @@
 package proyecto.cocinasegura.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+//import org.springframework.http.HttpHeaders;
+
 import proyecto.cocinasegura.Model.Receta;
 import proyecto.cocinasegura.Repository.RecetaRepository;
 
@@ -29,8 +32,7 @@ public class RecetaController {
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<String> crearReceta(
             @ModelAttribute Receta receta,
-            @RequestParam(required = false) MultipartFile imagen,
-            @RequestParam(required = false) MultipartFile video) {
+            @RequestParam(required = false) MultipartFile imagen) {
 
         // Validar campos obligatorios
         if (receta.getTitulo() == null || receta.getTitulo().isBlank()) {
@@ -38,9 +40,6 @@ public class RecetaController {
         }
         if (receta.getTiempoDeCoccion() == null || receta.getTiempoDeCoccion().isBlank()) {
             return ResponseEntity.badRequest().body("El tiempo de cocción es obligatorio.");
-        }
-        if (imagen != null && !imagen.isEmpty()) {
-            System.out.println("Nombre del archivo de imagen recibido: " + imagen.getOriginalFilename());
         }
 
         try {
@@ -50,16 +49,13 @@ public class RecetaController {
                 receta.setImagenURL(rutaImagen);
             }
 
-            // Guardar video si se proporciona
-            if (video != null && !video.isEmpty()) {
-                String rutaVideo = guardarArchivo(video, RUTA_VIDEOS);
-                receta.getVideos().add(rutaVideo);
-            }
-
+            // Guardar receta en la base de datos
             Receta recetaGuardada = recetaRepository.save(receta);
 
             // Redirigir al usuario a la página de detalles de la receta
-            return ResponseEntity.ok("/recetas/" + recetaGuardada.getId());
+            return ResponseEntity.status(HttpStatus.FOUND) // HTTP 302: Redirección temporal
+                    .header("Location", "/recetas?id=" + recetaGuardada.getId())
+                    .build();
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("Error al guardar la receta o los archivos.");
