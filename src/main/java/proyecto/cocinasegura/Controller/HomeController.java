@@ -7,8 +7,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import proyecto.cocinasegura.Model.Comentario;
 import proyecto.cocinasegura.Model.Receta;
 import proyecto.cocinasegura.Repository.RecetaRepository;
+import proyecto.cocinasegura.Repository.ComentarioRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +22,9 @@ public class HomeController {
 
     @Autowired
     private RecetaRepository recetaRepository;
+
+    @Autowired
+    private ComentarioRepository comentarioRepository;
 
     // Mapeo para la página de inicio
     @GetMapping("/")
@@ -72,6 +78,11 @@ public class HomeController {
         if (id != null) {
             Optional<Receta> recetaSeleccionada = recetaRepository.findById(id);
             recetaSeleccionada.ifPresent(receta -> model.addAttribute("recetaSeleccionada", receta));
+
+            // Usar el ComentarioRepository para obtener comentarios relacionados con la
+            // receta
+            List<Comentario> comentarios = comentarioRepository.findByRecetaId(id);
+            model.addAttribute("comentarios", comentarios);
         }
         return "recetas"; // Asegúrate de que este nombre coincide con tu archivo recetas.html
     }
@@ -83,6 +94,5 @@ public class HomeController {
         model.addAttribute("receta", new Receta());
         return "nueva-receta";
     }
-    
 
 }
