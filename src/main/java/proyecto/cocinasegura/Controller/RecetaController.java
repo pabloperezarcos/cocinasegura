@@ -124,4 +124,26 @@ public class RecetaController {
         return "/images/" + nombreArchivo;
     }
 
+    @PostMapping("/{id}/video")
+    public ResponseEntity<String> agregarVideo(@PathVariable Long id, @RequestParam String videoURL) {
+        Optional<Receta> recetaOpt = recetaRepository.findById(id);
+
+        if (recetaOpt.isPresent()) {
+            Receta receta = recetaOpt.get();
+
+            // Validar que la URL sea de YouTube
+            if (!videoURL.contains("youtube.com/watch?v=")) {
+                return ResponseEntity.badRequest().body("La URL proporcionada no es válida.");
+            }
+
+            // Agregar la URL del video
+            receta.setVideoURL(videoURL);
+            recetaRepository.save(receta);
+
+            return ResponseEntity.ok("Video agregado correctamente.");
+        }
+
+        return ResponseEntity.status(404).body("Receta no encontrada.");
+    }
+
 }
