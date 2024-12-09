@@ -37,7 +37,8 @@ jobs:
       - name: Build and analyze with SonarCloud
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn clean verify sonar:sonar \
+        run: |
+          mvn clean verify sonar:sonar \
             -Dsonar.projectKey=pabloperezarcos_cocinasegura \
             -Dsonar.organization=pabloperezarcos \
             -Dsonar.host.url=https://sonarcloud.io \
