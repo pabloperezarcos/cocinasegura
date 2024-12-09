@@ -29,6 +29,21 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
+
+		<!-- Ruta del reporte de cobertura de JaCoCo -->
+		<sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+
+		<!-- URL del servidor SonarQube Cloud -->
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
+		<!-- Token de autenticación (usar variables de entorno es más seguro) -->
+		<sonar.login>${env.SONAR_TOKEN}</sonar.login>
+
+		<!-- Clave del proyecto en SonarQube Cloud -->
+		<sonar.projectKey>pabloperezarcos_cocinasegura</sonar.projectKey>
+
+		<!-- Organización en SonarQube Cloud -->
+		<sonar.organization>pabloperezarcos</sonar.organization>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -62,12 +77,6 @@
 			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-
-		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
@@ -91,7 +100,7 @@
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-jackson</artifactId>
 			<version>0.11.5</version>
-		</dependency>		
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -100,7 +109,57 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.8</version> <!-- Verifica la última versión disponible -->
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
+
+	<!-- Definición de perfiles -->
+	<profiles>
+		<profile>
+			<id>coverage</id>
+			<build>
+				<plugins>
+					<plugin>
+						<groupId>org.jacoco</groupId>
+						<artifactId>jacoco-maven-plugin</artifactId>
+						<version>0.8.8</version>
+						<executions>
+							<execution>
+								<goals>
+									<goal>prepare-agent</goal>
+								</goals>
+							</execution>
+							<execution>
+								<id>report</id>
+								<phase>test</phase>
+								<goals>
+									<goal>report</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
 
 </project>
