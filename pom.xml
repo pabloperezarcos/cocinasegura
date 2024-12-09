@@ -36,9 +36,6 @@
 		<!-- URL del servidor SonarQube Cloud -->
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
-		<!-- Token de autenticación (usar variables de entorno es más seguro) -->
-		<sonar.login>${env.SONAR_TOKEN}</sonar.login>
-
 		<!-- Clave del proyecto en SonarQube Cloud -->
 		<sonar.projectKey>pabloperezarcos_cocinasegura</sonar.projectKey>
 
