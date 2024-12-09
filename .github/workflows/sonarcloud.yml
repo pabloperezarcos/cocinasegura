@@ -1,4 +1,4 @@
-name: SonarCloud
+name: SonarCloud Analysis
 
 on:
   push:
@@ -9,13 +9,14 @@ on:
       - main
 
 jobs:
-  build:
-    name: Build and Analyze
+  sonarcloud:
+    name: SonarCloud Scan
     runs-on: ubuntu-latest
 
     steps:
       # Paso 1: Checkout del Código
-      - uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v3
 
       # Paso 2: Configurar JDK 17
       - name: Set up JDK 17
@@ -33,14 +34,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      # Paso 4: Ejecutar el Build y Análisis con SonarCloud
-      - name: Build and analyze with SonarCloud
+      # Paso 4: Ejecutar el Build y Análisis con SonarCloud usando la Acción Oficial
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          organization: pabloperezarcos  # Reemplaza con tu organización en SonarCloud
+          projectKey: pabloperezarcos_cocinasegura  # Reemplaza con tu clave de proyecto en SonarCloud
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          mvn clean verify sonar:sonar \
-            -Dsonar.projectKey=pabloperezarcos_cocinasegura \
-            -Dsonar.organization=pabloperezarcos \
-            -Dsonar.host.url=https://sonarcloud.io \
-            -Dsonar.login=$SONAR_TOKEN \
-            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
