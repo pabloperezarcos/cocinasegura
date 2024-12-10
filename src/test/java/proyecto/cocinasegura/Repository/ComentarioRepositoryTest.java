@@ -5,7 +5,10 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
+
 import proyecto.cocinasegura.Model.Comentario;
 import proyecto.cocinasegura.Model.Receta;
 import proyecto.cocinasegura.Model.Usuario;
@@ -13,7 +16,9 @@ import proyecto.cocinasegura.Model.Usuario;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@DataJpaTest
+@SpringBootTest
+@ActiveProfiles("test")
+@Sql({ "/schema.sql", "/data.sql" })
 public class ComentarioRepositoryTest {
 
     @Autowired
@@ -34,12 +39,22 @@ public class ComentarioRepositoryTest {
         receta = new Receta();
         receta.setTitulo("Receta de prueba");
         receta.setTipoDeCocina("Postre");
+        receta.setDescripcion("Descripción de prueba");
+        receta.setDificultad("Fácil");
+        receta.setIngredientes("Harina, Azúcar, Huevos");
+        receta.setInstrucciones("Paso 1: Mezclar los ingredientes. Paso 2: Hornear.");
+        receta.setPaisDeOrigen("Chile");
+        receta.setTiempoDeCoccion("30");
+        receta.setImagenURL("/imagen");
+        receta.setVideoURL("video");
         recetaRepository.save(receta);
 
         // Crear y guardar un usuario
         usuario = new Usuario();
         usuario.setNombreUsuario("testUser");
         usuario.setContrasena("testContrasena");
+        usuario.setCorreo("testuser3@example.com");
+        usuario.setRoles("cliente");
         usuarioRepository.save(usuario);
 
         // Crear y guardar comentarios
