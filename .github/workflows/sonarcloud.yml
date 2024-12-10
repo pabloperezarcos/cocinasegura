@@ -36,9 +36,12 @@ jobs:
 
       # Paso 4: Ejecutar el Build y Análisis con SonarCloud usando la Acción Oficial
       - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@master
+        uses: SonarSource/sonarqube-scan-action@v4.1.0
         with:
-          organization: pabloperezarcos  # Reemplaza con tu organización en SonarCloud
-          projectKey: pabloperezarcos_cocinasegura  # Reemplaza con tu clave de proyecto en SonarCloud
+          args: >
+            -Dsonar.projectKey=pabloperezarcos_cocinasegura
+            -Dsonar.organization=pabloperezarcos
+            -Dsonar.host.url=https://sonarcloud.io
+            -Dsonar.coverage.jacoco.xmlReportPaths=target/site/jacoco/jacoco.xml
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
