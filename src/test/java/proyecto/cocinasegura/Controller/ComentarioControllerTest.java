@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -20,10 +21,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@SpringBootTest
 public class ComentarioControllerTest {
 
     @Mock
@@ -54,14 +57,17 @@ public class ComentarioControllerTest {
         Comentario comentario = new Comentario();
         comentario.setTexto("Deliciosa receta");
         comentario.setFecha(LocalDateTime.now());
+        comentario.setValoracion(5); // Un valor entre 1 y 5
+
         comentarios.add(comentario);
 
+        // Simula la respuesta del repositorio
         when(comentarioRepository.findByRecetaId(recetaId)).thenReturn(comentarios);
 
         // Act & Assert
         mockMvc.perform(get("/api/comentarios/{recetaId}", recetaId))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].texto").value("Deliciosa receta"));
+                .andExpect(status().isOk()) // Verifica que el estado HTTP es 200
+                .andExpect(jsonPath("$[0].texto").value("Deliciosa receta")); // Verifica el JSON
     }
 
     @Test
