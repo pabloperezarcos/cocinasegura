@@ -28,22 +28,21 @@ public class RecetaController {
     private final String RUTA_IMAGENES = "src/main/resources/static/images/";
     private final String RUTA_VIDEOS = "src/main/resources/static/videos/";
 
-    // Endpoint para guardar recetas
+    // Método para crear receta
     @PostMapping
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public ResponseEntity<String> crearReceta(
             @ModelAttribute Receta receta,
             @RequestParam(required = false) MultipartFile imagen) {
-
-        // Validar campos obligatorios
-        if (receta.getTitulo() == null || receta.getTitulo().isBlank()) {
-            return ResponseEntity.badRequest().body("El título de la receta es obligatorio.");
-        }
-        if (receta.getTiempoDeCoccion() == null || receta.getTiempoDeCoccion().isBlank()) {
-            return ResponseEntity.badRequest().body("El tiempo de cocción es obligatorio.");
-        }
-
         try {
+            // Validar campos obligatorios
+            if (receta.getTitulo() == null || receta.getTitulo().isBlank()) {
+                return ResponseEntity.badRequest().body("El título de la receta es obligatorio.");
+            }
+            if (receta.getTiempoDeCoccion() == null || receta.getTiempoDeCoccion().isBlank()) {
+                return ResponseEntity.badRequest().body("El tiempo de cocción es obligatorio.");
+            }
+
             // Guardar imagen si se proporciona
             if (imagen != null && !imagen.isEmpty()) {
                 String rutaImagen = guardarArchivo(imagen, RUTA_IMAGENES);
@@ -53,13 +52,19 @@ public class RecetaController {
             // Guardar receta en la base de datos
             Receta recetaGuardada = recetaRepository.save(receta);
 
+            // Verificar si el ID fue asignado correctamente
+            if (recetaGuardada.getId() == null) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("Error al guardar la receta. No se generó el ID.");
+            }
+
             // Redirigir al usuario a la página de detalles de la receta
-            return ResponseEntity.status(HttpStatus.FOUND) // HTTP 302: Redirección temporal
+            return ResponseEntity.status(HttpStatus.FOUND)
                     .header("Location", "/recetas?id=" + recetaGuardada.getId())
                     .build();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(500).body("Error al guardar la receta o los archivos.");
+            return ResponseEntity.status(500).body("Error al crear la receta.");
         }
     }
 
@@ -72,57 +77,59 @@ public class RecetaController {
             @RequestParam(required = false) MultipartFile[] videos) {
 
         Optional<Receta> recetaOpt = recetaRepository.findById(id);
+        if (recetaOpt.isEmpty()) {
+            System.out.println("Receta no encontrada para ID: " + id);
+            return ResponseEntity.badRequest().body("Receta no encontrada.");
+        }
 
-        if (recetaOpt.isPresent()) {
-            Receta receta = recetaOpt.get();
+        Receta receta = recetaOpt.get();
 
-            try {
-                // Guardar fotos
-                if (fotos != null && fotos.length > 0) {
-                    for (MultipartFile foto : fotos) {
+        try {
+            if (fotos != null) {
+                for (MultipartFile foto : fotos) {
+                    if (!foto.isEmpty()) {
                         String rutaFoto = guardarArchivo(foto, RUTA_IMAGENES);
                         receta.getFotos().add(rutaFoto);
                     }
                 }
-
-                // Guardar videos
-                if (videos != null && videos.length > 0) {
-                    for (MultipartFile video : videos) {
+            }
+            if (videos != null) {
+                for (MultipartFile video : videos) {
+                    if (!video.isEmpty()) {
                         String rutaVideo = guardarArchivo(video, RUTA_VIDEOS);
                         receta.getVideos().add(rutaVideo);
                     }
                 }
-
-                recetaRepository.save(receta);
-                return ResponseEntity.ok("Fotos y/o videos agregados correctamente a la receta.");
-            } catch (IOException e) {
-                e.printStackTrace();
-                return ResponseEntity.status(500).body("Error al guardar archivos.");
             }
+            recetaRepository.save(receta);
+            return ResponseEntity.ok("Fotos y/o videos agregados correctamente a la receta.");
+        } catch (Exception e) {
+            System.out.println("Error al guardar media: " + e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar archivos.");
         }
-
-        return ResponseEntity.badRequest().body("Receta no encontrada.");
     }
 
     // Método para guardar archivos en el sistema
-    private String guardarArchivo(MultipartFile archivo, String subDirectorio) throws IOException {
-        // Verificar que el archivo tiene una extensión válida
+    public String guardarArchivo(MultipartFile archivo, String subDirectorio) throws IOException {
+        // Verifica que el archivo tenga una extensión válida
         String nombreArchivo = archivo.getOriginalFilename();
-        if (nombreArchivo != null && !nombreArchivo.matches(".*\\.(jpg|jpeg|png|mp4|webm)$")) {
+        if (nombreArchivo == null || !nombreArchivo.matches(".*\\.(jpg|jpeg|png|mp4|webm)$")) {
             throw new IOException("Formato de archivo no permitido: " + nombreArchivo);
         }
 
-        // Ruta completa del subdirectorio
+        // Asegúrate de que el directorio existe
         Path directorioPath = Paths.get(subDirectorio);
         if (!Files.exists(directorioPath)) {
             Files.createDirectories(directorioPath); // Crear directorio si no existe
         }
 
+        // Guardar el archivo en la ruta especificada
         Path archivoPath = directorioPath.resolve(nombreArchivo);
         Files.copy(archivo.getInputStream(), archivoPath);
 
-        // Retornar la ruta relativa accesible desde el frontend
-        return "/images/" + nombreArchivo;
+        // Devuelve la ruta relativa para usarla en el frontend
+        return "/static/images/" + nombreArchivo;
     }
 
     @PostMapping("/{id}/video")
