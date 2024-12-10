@@ -5,13 +5,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-//import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
+
 import proyecto.cocinasegura.Model.Receta;
 
 import java.util.List;
 
-@DataJpaTest
+@SpringBootTest
+@ActiveProfiles("test")
+@Sql({ "/schema.sql", "/data.sql" })
 public class RecetaRepositoryTest {
 
     @Autowired
@@ -23,14 +27,23 @@ public class RecetaRepositoryTest {
     void setUp() {
         // Crear una receta para los tests
         receta = new Receta();
-        receta.setTitulo("Tarta de Manzana");
+        receta.setTitulo("Receta de prueba");
         receta.setTipoDeCocina("Postre");
-        receta.setIngredientes("Manzana, harina, azúcar, mantequilla");
-        receta.setPaisDeOrigen("España");
-        receta.setDificultad("Media");
+        receta.setDescripcion("Descripción de prueba");
+        receta.setDificultad("Fácil");
+        receta.setIngredientes("Harina, Azúcar, Huevos");
+        receta.setInstrucciones("Paso 1: Mezclar los ingredientes. Paso 2: Hornear.");
+        receta.setPaisDeOrigen("Chile");
+        receta.setTiempoDeCoccion("30");
+        receta.setImagenURL("/imagen");
+        receta.setVideoURL("video");
+        recetaRepository.save(receta);
 
         // Guardar la receta en la base de datos
         recetaRepository.save(receta);
+
+        // Verificar que la receta se guardó correctamente
+        assertNotNull(receta.getId(), "La receta debe tener un ID asignado después de guardarla");
     }
 
     @Test
@@ -88,4 +101,16 @@ public class RecetaRepositoryTest {
         assertFalse(recetas.isEmpty(), "La lista de recetas no debe estar vacía");
         assertEquals("Media", recetas.get(0).getDificultad(), "La dificultad debe coincidir");
     }
+
+    @Test
+    void testFindByTituloContainingIgnoreCase_NoResults() {
+        // Act
+        List<Receta> recetas = recetaRepository.findByTituloContainingIgnoreCase("tarta inexistente");
+
+        // Assert
+        assertNotNull(recetas, "La lista de recetas no debe ser nula");
+        assertTrue(recetas.isEmpty(),
+                "La lista de recetas debe estar vacía cuando no se encuentra ninguna coincidencia");
+    }
+
 }
