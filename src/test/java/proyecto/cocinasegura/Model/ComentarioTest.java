@@ -1,11 +1,13 @@
 package proyecto.cocinasegura.Model;
 
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SpringBootTest
 public class ComentarioTest {
 
     @Test
