@@ -5,13 +5,17 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-//import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.jdbc.Sql;
+
 import proyecto.cocinasegura.Model.Usuario;
 
 import java.util.Optional;
 
-@DataJpaTest
+@SpringBootTest
+@ActiveProfiles("test")
+@Sql({ "/schema.sql", "/data.sql" })
 public class UsuarioRepositoryTest {
 
     @Autowired
@@ -25,7 +29,9 @@ public class UsuarioRepositoryTest {
         usuario = new Usuario();
         usuario.setNombreUsuario("testUser");
         usuario.setContrasena("testContrasena");
-        usuarioRepository.save(usuario);
+        usuario.setCorreo("testuser" + System.currentTimeMillis() + "@example.com"); // Correo único
+        usuario.setRoles("USER"); // Asignar un valor al campo roles
+        usuarioRepository.save(usuario); // Guarda el usuario en la base de datos
     }
 
     @Test
