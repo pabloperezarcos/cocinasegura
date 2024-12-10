@@ -63,7 +63,7 @@ public class HomeController {
         }
 
         model.addAttribute("recetas", listaRecetas);
-        return "buscar";
+        return "resultados-buscar";
     }
 
     // Mapeo para la página de recetas
@@ -89,7 +89,7 @@ public class HomeController {
             }
         }
 
-        return "recetas"; // Retornar la vista correspondiente
+        return "detalle-receta"; // Retornar la vista correspondiente
     }
 
     // Mapeo para recetas nuevas
