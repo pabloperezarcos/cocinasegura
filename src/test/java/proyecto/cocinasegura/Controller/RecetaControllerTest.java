@@ -11,7 +11,7 @@ import org.springframework.http.MediaType;
 //import org.springframework.http.ResponseEntity;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
+//import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,7 +32,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+//import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -69,33 +69,36 @@ public class RecetaControllerTest {
     void testCrearReceta_Success() throws Exception {
         // Arrange
         Receta recetaMock = new Receta();
+        recetaMock.setId(1L);
         recetaMock.setTitulo("Tarta de Manzana");
         recetaMock.setTiempoDeCoccion("30 minutos");
+        recetaMock.setTipoDeCocina("Postre");
+        recetaMock.setIngredientes("Manzanas, harina, azúcar");
+        recetaMock.setPaisDeOrigen("España");
+        recetaMock.setDificultad("Fácil");
+        recetaMock.setInstrucciones("Mezclar los ingredientes y hornear.");
+        recetaMock.setDescripcion("Deliciosa tarta de manzana.");
 
-        // Simula el comportamiento del repositorio y asigna un id automáticamente
         when(recetaRepository.save(any(Receta.class))).thenReturn(recetaMock);
 
         MockMultipartFile imagen = new MockMultipartFile("imagen", "imagen.jpg", "image/jpeg",
                 "contenido_imagen".getBytes());
 
         // Act & Assert
-        MvcResult result = mockMvc.perform(multipart("/api/recetas")
+        mockMvc.perform(multipart("/api/recetas")
                 .file(imagen)
-                .with(user("testuser").roles("USER")) // Añadir contexto de seguridad
+                .with(user("testuser").roles("USER")) // Añadir contexto de seguridad que proporcione ROLE_USER
                 .param("titulo", "Tarta de Manzana")
                 .param("tiempoDeCoccion", "30 minutos")
+                .param("tipoDeCocina", "Postre")
+                .param("ingredientes", "Manzanas, harina, azúcar")
+                .param("paisDeOrigen", "España")
+                .param("dificultad", "Fácil")
+                .param("instrucciones", "Mezclar los ingredientes y hornear.")
+                .param("descripcion", "Deliciosa tarta de manzana.")
                 .contentType(MediaType.MULTIPART_FORM_DATA))
-                .andDo(print()) // Imprimir detalles de la solicitud y respuesta
                 .andExpect(status().isFound())
-                .andExpect(header().string("Location", "/recetas?id=1"))
-                .andReturn();
-
-        // Verificar detalles de error si ocurre un error 500
-        if (result.getResponse().getStatus() == 500) {
-            String errorMessage = result.getResponse().getContentAsString();
-            System.err.println("Error Details: " + errorMessage);
-            fail("Unexpected 500 error: " + errorMessage);
-        }
+                .andExpect(header().string("Location", "/recetas?id=1"));
     }
 
     @Test
