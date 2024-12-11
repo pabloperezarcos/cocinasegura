@@ -25,13 +25,12 @@ public class UsuarioRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        // Crear un usuario para los tests
         usuario = new Usuario();
-        usuario.setNombreUsuario("testUser");
+        usuario.setNombreUsuario("testUser" + System.currentTimeMillis());
         usuario.setContrasena("testContrasena");
-        usuario.setCorreo("testuser" + System.currentTimeMillis() + "@example.com"); // Correo único
-        usuario.setRoles("USER"); // Asignar un valor al campo roles
-        usuarioRepository.save(usuario); // Guarda el usuario en la base de datos
+        usuario.setCorreo("testuser" + System.currentTimeMillis() + "@example.com");
+        usuario.setRoles("USER");
+        usuarioRepository.save(usuario);
     }
 
     @Test
