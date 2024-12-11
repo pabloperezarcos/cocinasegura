@@ -61,7 +61,8 @@ public class Receta {
 
     // Constructor con parámetros
     public Receta(String titulo, String tipoDeCocina, String ingredientes, String paisDeOrigen,
-            String dificultad, String instrucciones, String tiempoDeCoccion, String imagenURL,String videoURL, String descripcion) {
+            String dificultad, String instrucciones, String tiempoDeCoccion, String imagenURL, String videoURL,
+            String descripcion) {
         this.titulo = titulo;
         this.tipoDeCocina = tipoDeCocina;
         this.ingredientes = ingredientes;
@@ -77,6 +78,10 @@ public class Receta {
     // Getters y Setters para todos los campos
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getTitulo() {
