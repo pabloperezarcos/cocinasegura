@@ -59,7 +59,7 @@ public class JwtServiceTest {
         String shortLivedToken = jwtService.generateToken("shortLivedUser");
         Thread.sleep(2000); // Wait for 2 seconds to ensure token expiration
         assertFalse(jwtService.validateToken(shortLivedToken, User.builder()
-                .username("shortLivedUser")
+                .username("testUser")
                 .password("testPassword")
                 .roles("USER")
                 .build()), "The token should be expired");
