@@ -51,7 +51,7 @@ public class ComentarioRepositoryTest {
 
         // Crear y guardar un usuario
         usuario = new Usuario();
-        usuario.setNombreUsuario("testUser");
+        usuario.setNombreUsuario("testUser" + System.currentTimeMillis());
         usuario.setContrasena("testContrasena");
         usuario.setCorreo("testuser3@example.com");
         usuario.setRoles("cliente");
