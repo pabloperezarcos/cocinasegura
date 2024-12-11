@@ -5,12 +5,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import proyecto.cocinasegura.Services.JwtService;
-import proyecto.cocinasegura.Services.UsuarioDetailsServiceImpl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -25,29 +25,25 @@ public class JwtAuthFilter extends OncePerRequestFilter {
     private JwtService jwtService;
 
     @Autowired
-    private UsuarioDetailsServiceImpl userDetailsService;
+    private UserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain)
             throws ServletException, IOException {
-        // Retrieve the Authorization header
         String authHeader = request.getHeader("Authorization");
         String token = null;
         String username = null;
 
         try {
-            // Check if the header starts with "Bearer "
             if (authHeader != null && authHeader.startsWith("Bearer ")) {
-                token = authHeader.substring(7); // Extract token
-                username = jwtService.extractUsername(token); // Extract username from token
+                token = authHeader.substring(7);
+                username = jwtService.extractUsername(token);
             }
 
-            // If the token is valid and no authentication is set in the context
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-                // Validate token and set authentication
                 if (jwtService.validateToken(token, userDetails)) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails,
@@ -55,22 +51,29 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                             userDetails.getAuthorities());
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
+                } else {
+                    // Token inválido, devolvemos 401
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+                    return;
                 }
+            } else if (username == null && authHeader != null) {
+                // Hay un header "Authorization" pero es inválido
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+                return;
+            } else if (authHeader == null) {
+                // No hay token
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+                return;
             }
+
         } catch (Exception e) {
-            // Log any exception (optional)
+            // En caso de cualquier excepción relacionada con el token
             logger.warn("JWT Authentication failed: " + e.getMessage());
+            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Unauthorized");
+            return;
         }
 
-        // Continue the filter chain, regardless of authentication state
+        // Si todo está bien, continuar con la cadena
         filterChain.doFilter(request, response);
     }
-
-    @Override
-    protected boolean shouldNotFilter(@NonNull HttpServletRequest request) throws ServletException {
-        String path = request.getRequestURI();
-        return path.startsWith("/assets/") || path.startsWith("/css/") || path.startsWith("/js/") ||
-                path.startsWith("/images/") || path.startsWith("/webjars/") || path.equals("/favicon.ico");
-    }
-
 }
