@@ -12,7 +12,6 @@ public class ComentarioTest {
 
     @Test
     void testGettersAndSetters() {
-        // Arrange
         Comentario comentario = new Comentario();
         Long id = 1L;
         Receta receta = new Receta();
@@ -21,7 +20,6 @@ public class ComentarioTest {
         int valoracion = 5;
         LocalDateTime fecha = LocalDateTime.now();
 
-        // Act
         comentario.setId(id);
         comentario.setReceta(receta);
         comentario.setUsuario(usuario);
@@ -29,7 +27,6 @@ public class ComentarioTest {
         comentario.setValoracion(valoracion);
         comentario.setFecha(fecha);
 
-        // Assert
         assertEquals(id, comentario.getId());
         assertEquals(receta, comentario.getReceta());
         assertEquals(usuario, comentario.getUsuario());

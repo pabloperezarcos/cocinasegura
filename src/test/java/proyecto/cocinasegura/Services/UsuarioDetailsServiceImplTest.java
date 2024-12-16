@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import proyecto.cocinasegura.Model.Usuario;
 import proyecto.cocinasegura.Repository.UsuarioRepository;
+import proyecto.cocinasegura.Services.UsuarioDetailsServiceImpl;
 
 import java.util.Optional;
 
@@ -30,17 +31,14 @@ public class UsuarioDetailsServiceImplTest {
 
     @Test
     void testLoadUserByUsername_UserFound() {
-        // Arrange
         Usuario usuario = new Usuario();
         usuario.setNombreUsuario("testUser");
         usuario.setContrasena("testContrasena");
 
         when(usuarioRepository.findByNombreUsuario("testUser")).thenReturn(Optional.of(usuario));
 
-        // Act
         UserDetails userDetails = usuarioDetailsService.loadUserByUsername("testUser");
 
-        // Assert
         assertNotNull(userDetails, "UserDetails should not be null");
         assertEquals("testUser", userDetails.getUsername(), "Username should match");
         assertEquals("testContrasena", userDetails.getPassword(), "Contrasena should match");
@@ -49,10 +47,8 @@ public class UsuarioDetailsServiceImplTest {
 
     @Test
     void testLoadUserByUsername_UserNotFound() {
-        // Arrange
         when(usuarioRepository.findByNombreUsuario("nonexistentUser")).thenReturn(Optional.empty());
 
-        // Act & Assert
         UsernameNotFoundException exception = assertThrows(
                 UsernameNotFoundException.class,
                 () -> usuarioDetailsService.loadUserByUsername("nonexistentUser"),

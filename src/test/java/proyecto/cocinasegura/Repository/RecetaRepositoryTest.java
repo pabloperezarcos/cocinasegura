@@ -25,7 +25,7 @@ public class RecetaRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        // Crear una receta para los tests
+
         receta = new Receta();
         receta.setTitulo("Receta de prueba");
         receta.setTipoDeCocina("Postre");
@@ -39,19 +39,16 @@ public class RecetaRepositoryTest {
         receta.setVideoURL("video");
         recetaRepository.save(receta);
 
-        // Guardar la receta en la base de datos
         recetaRepository.save(receta);
 
-        // Verificar que la receta se guardó correctamente
         assertNotNull(receta.getId(), "La receta debe tener un ID asignado después de guardarla");
     }
 
     @Test
     void testFindByTituloContainingIgnoreCase() {
-        // Act
+
         List<Receta> recetas = recetaRepository.findByTituloContainingIgnoreCase("tarta");
 
-        // Assert
         assertNotNull(recetas, "La lista de recetas no debe ser nula");
         assertFalse(recetas.isEmpty(), "La lista de recetas no debe estar vacía");
         assertEquals("Tarta de Manzana", recetas.get(0).getTitulo(), "El título de la receta debe coincidir");
@@ -59,10 +56,9 @@ public class RecetaRepositoryTest {
 
     @Test
     void testFindByTipoDeCocinaIgnoreCase() {
-        // Act
+
         List<Receta> recetas = recetaRepository.findByTipoDeCocinaIgnoreCase("postre");
 
-        // Assert
         assertNotNull(recetas, "La lista de recetas no debe ser nula");
         assertFalse(recetas.isEmpty(), "La lista de recetas no debe estar vacía");
         assertEquals("Postre", recetas.get(0).getTipoDeCocina(), "El tipo de cocina debe coincidir");
@@ -70,10 +66,9 @@ public class RecetaRepositoryTest {
 
     @Test
     void testFindByIngredientesContainingIgnoreCase() {
-        // Act
+
         List<Receta> recetas = recetaRepository.findByIngredientesContainingIgnoreCase("manzana");
 
-        // Assert
         assertNotNull(recetas, "La lista de recetas no debe ser nula");
         assertFalse(recetas.isEmpty(), "La lista de recetas no debe estar vacía");
         assertTrue(recetas.get(0).getIngredientes().toLowerCase().contains("manzana"),
@@ -82,10 +77,9 @@ public class RecetaRepositoryTest {
 
     @Test
     void testFindByPaisDeOrigenIgnoreCase() {
-        // Act
+
         List<Receta> recetas = recetaRepository.findByPaisDeOrigenIgnoreCase("españa");
 
-        // Assert
         assertNotNull(recetas, "La lista de recetas no debe ser nula");
         assertFalse(recetas.isEmpty(), "La lista de recetas no debe estar vacía");
         assertEquals("España", recetas.get(0).getPaisDeOrigen(), "El país de origen debe coincidir");
@@ -93,10 +87,9 @@ public class RecetaRepositoryTest {
 
     @Test
     void testFindByDificultadIgnoreCase() {
-        // Act
+
         List<Receta> recetas = recetaRepository.findByDificultadIgnoreCase("media");
 
-        // Assert
         assertNotNull(recetas, "La lista de recetas no debe ser nula");
         assertFalse(recetas.isEmpty(), "La lista de recetas no debe estar vacía");
         assertEquals("Media", recetas.get(0).getDificultad(), "La dificultad debe coincidir");
@@ -104,10 +97,9 @@ public class RecetaRepositoryTest {
 
     @Test
     void testFindByTituloContainingIgnoreCase_NoResults() {
-        // Act
+
         List<Receta> recetas = recetaRepository.findByTituloContainingIgnoreCase("tarta inexistente");
 
-        // Assert
         assertNotNull(recetas, "La lista de recetas no debe ser nula");
         assertTrue(recetas.isEmpty(),
                 "La lista de recetas debe estar vacía cuando no se encuentra ninguna coincidencia");

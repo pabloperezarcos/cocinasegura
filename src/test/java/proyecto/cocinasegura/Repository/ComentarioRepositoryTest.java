@@ -35,7 +35,7 @@ public class ComentarioRepositoryTest {
 
     @BeforeEach
     void setUp() {
-        // Crear y guardar una receta
+
         receta = new Receta();
         receta.setTitulo("Receta de prueba");
         receta.setTipoDeCocina("Postre");
@@ -49,7 +49,6 @@ public class ComentarioRepositoryTest {
         receta.setVideoURL("video");
         recetaRepository.save(receta);
 
-        // Crear y guardar un usuario
         usuario = new Usuario();
         usuario.setNombreUsuario("testUser" + System.currentTimeMillis());
         usuario.setContrasena("testContrasena");
@@ -57,7 +56,6 @@ public class ComentarioRepositoryTest {
         usuario.setRoles("cliente");
         usuarioRepository.save(usuario);
 
-        // Crear y guardar comentarios
         Comentario comentario1 = new Comentario();
         comentario1.setReceta(receta);
         comentario1.setUsuario(usuario);
@@ -77,10 +75,9 @@ public class ComentarioRepositoryTest {
 
     @Test
     void testFindByRecetaId_ComentariosFound() {
-        // Act
+
         List<Comentario> comentarios = comentarioRepository.findByRecetaId(receta.getId());
 
-        // Assert
         assertNotNull(comentarios, "La lista de comentarios no debe ser nula");
         assertFalse(comentarios.isEmpty(), "La lista de comentarios no debe estar vacía");
         assertEquals(2, comentarios.size(), "Debe haber 2 comentarios para la receta");
@@ -90,10 +87,9 @@ public class ComentarioRepositoryTest {
 
     @Test
     void testFindByRecetaId_ComentariosNotFound() {
-        // Act
-        List<Comentario> comentarios = comentarioRepository.findByRecetaId(999L); // ID inexistente
 
-        // Assert
+        List<Comentario> comentarios = comentarioRepository.findByRecetaId(999L);
+
         assertNotNull(comentarios, "La lista de comentarios no debe ser nula");
         assertTrue(comentarios.isEmpty(), "La lista de comentarios debe estar vacía para un ID inexistente");
     }

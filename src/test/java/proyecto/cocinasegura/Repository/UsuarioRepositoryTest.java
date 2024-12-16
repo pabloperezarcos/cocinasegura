@@ -35,20 +35,17 @@ public class UsuarioRepositoryTest {
 
     @Test
     void testFindByNombreUsuario_UserFound() {
-        // Act
+
         Optional<Usuario> foundUsuario = usuarioRepository.findByNombreUsuario("testUser");
 
-        // Assert
         assertTrue(foundUsuario.isPresent(), "Usuario debería ser encontrado");
         assertEquals("testUser", foundUsuario.get().getNombreUsuario(), "El nombre de usuario debería coincidir");
     }
 
     @Test
     void testFindByNombreUsuario_UserNotFound() {
-        // Act
         Optional<Usuario> foundUsuario = usuarioRepository.findByNombreUsuario("nonexistentUser");
 
-        // Assert
         assertFalse(foundUsuario.isPresent(), "Usuario no debería ser encontrado");
     }
 }

@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-//import org.springframework.http.HttpHeaders;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import proyecto.cocinasegura.Model.Receta;
@@ -50,18 +49,8 @@ public class RecetaController {
             }
 
             // Guardar receta en la base de datos
-            Receta recetaGuardada = recetaRepository.save(receta);
-
-            // Verificar si el ID fue asignado correctamente
-            if (recetaGuardada.getId() == null) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body("Error al guardar la receta. No se generó el ID.");
-            }
-
-            // Redirigir al usuario a la página de detalles de la receta
-            return ResponseEntity.status(HttpStatus.FOUND)
-                    .header("Location", "/recetas?id=" + recetaGuardada.getId())
-                    .build();
+            recetaRepository.save(receta);
+            return ResponseEntity.ok("Receta creada exitosamente.");
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("Error al crear la receta.");
@@ -79,7 +68,7 @@ public class RecetaController {
         Optional<Receta> recetaOpt = recetaRepository.findById(id);
         if (recetaOpt.isEmpty()) {
             System.out.println("Receta no encontrada para ID: " + id);
-            return ResponseEntity.badRequest().body("Receta no encontrada.");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Receta no encontrada.");
         }
 
         Receta receta = recetaOpt.get();

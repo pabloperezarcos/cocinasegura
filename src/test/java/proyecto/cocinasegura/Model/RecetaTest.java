@@ -14,7 +14,6 @@ public class RecetaTest {
 
     @Test
     void testConstructorWithParameters() {
-        // Arrange
         String titulo = "Tarta de Manzana";
         String tipoDeCocina = "Postre";
         String ingredientes = "Manzanas, harina, azúcar";
@@ -26,11 +25,9 @@ public class RecetaTest {
         String videoURL = "http://example.com/tarta.mp4";
         String descripcion = "Deliciosa tarta de manzana.";
 
-        // Act
         Receta receta = new Receta(titulo, tipoDeCocina, ingredientes, paisDeOrigen, dificultad, instrucciones,
                 tiempoDeCoccion, imagenURL, videoURL, descripcion);
 
-        // Assert
         assertEquals(titulo, receta.getTitulo());
         assertEquals(tipoDeCocina, receta.getTipoDeCocina());
         assertEquals(ingredientes, receta.getIngredientes());
@@ -45,33 +42,27 @@ public class RecetaTest {
 
     @Test
     void testSettersAndGetters() {
-        // Arrange
         Receta receta = new Receta();
         String titulo = "Tarta de Manzana";
         String tipoDeCocina = "Postre";
 
-        // Act
         receta.setTitulo(titulo);
         receta.setTipoDeCocina(tipoDeCocina);
 
-        // Assert
         assertEquals(titulo, receta.getTitulo());
         assertEquals(tipoDeCocina, receta.getTipoDeCocina());
     }
 
     @Test
     void testFotosCollection() {
-        // Arrange
         Receta receta = new Receta();
         List<String> fotos = new ArrayList<>();
         fotos.add("http://example.com/foto1.jpg");
         fotos.add("http://example.com/foto2.jpg");
 
-        // Act
         receta.setFotos(fotos);
         List<String> actualFotos = receta.getFotos();
 
-        // Assert
         assertEquals(2, actualFotos.size());
         assertTrue(actualFotos.contains("http://example.com/foto1.jpg"));
         assertTrue(actualFotos.contains("http://example.com/foto2.jpg"));
@@ -79,17 +70,14 @@ public class RecetaTest {
 
     @Test
     void testVideosCollection() {
-        // Arrange
         Receta receta = new Receta();
         List<String> videos = new ArrayList<>();
         videos.add("http://example.com/video1.mp4");
         videos.add("http://example.com/video2.mp4");
 
-        // Act
         receta.setVideos(videos);
         List<String> actualVideos = receta.getVideos();
 
-        // Assert
         assertEquals(2, actualVideos.size());
         assertTrue(actualVideos.contains("http://example.com/video1.mp4"));
         assertTrue(actualVideos.contains("http://example.com/video2.mp4"));

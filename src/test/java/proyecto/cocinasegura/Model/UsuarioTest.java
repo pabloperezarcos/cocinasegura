@@ -13,7 +13,6 @@ public class UsuarioTest {
 
     @Test
     void testGettersAndSetters() {
-        // Arrange
         Usuario usuario = new Usuario();
         Long id = 1L;
         String nombreUsuario = "testUser";
@@ -21,14 +20,12 @@ public class UsuarioTest {
         String contrasena = "password";
         String roles = "ROLE_USER,ROLE_ADMIN";
 
-        // Act
         usuario.setId(id);
         usuario.setNombreUsuario(nombreUsuario);
         usuario.setCorreo(correo);
         usuario.setContrasena(contrasena);
         usuario.setRoles(roles);
 
-        // Assert
         assertEquals(id, usuario.getId());
         assertEquals(nombreUsuario, usuario.getNombreUsuario());
         assertEquals(correo, usuario.getCorreo());
@@ -38,14 +35,11 @@ public class UsuarioTest {
 
     @Test
     void testGetAuthorities() {
-        // Arrange
         Usuario usuario = new Usuario();
         usuario.setRoles("ROLE_USER,ROLE_ADMIN");
 
-        // Act
         Collection<? extends GrantedAuthority> authorities = usuario.getAuthorities();
 
-        // Assert
         assertEquals(2, authorities.size());
         assertTrue(authorities.stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_USER")));
         assertTrue(authorities.stream().anyMatch(auth -> auth.getAuthority().equals("ROLE_ADMIN")));
@@ -53,12 +47,10 @@ public class UsuarioTest {
 
     @Test
     void testUserDetailsMethods() {
-        // Arrange
         Usuario usuario = new Usuario();
         usuario.setNombreUsuario("testUser");
         usuario.setContrasena("password");
 
-        // Act & Assert
         assertEquals("testUser", usuario.getUsername());
         assertEquals("password", usuario.getPassword());
         assertTrue(usuario.isAccountNonExpired());
@@ -69,14 +61,11 @@ public class UsuarioTest {
 
     @Test
     void testToString() {
-        // Arrange
         Usuario usuario = new Usuario();
         usuario.setNombreUsuario("testUser");
 
-        // Act
         String result = usuario.toString();
 
-        // Assert
         assertEquals("testUser", result);
     }
 }

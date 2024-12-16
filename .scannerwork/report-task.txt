@@ -1,0 +1,6 @@
+projectKey=CocinaSegura
+serverUrl=http://localhost:9000
+serverVersion=24.12.0.100206
+dashboardUrl=http://localhost:9000/dashboard?id=CocinaSegura
+ceTaskId=f6cfaf89-3130-4fd0-9248-660cd8619293
+ceTaskUrl=http://localhost:9000/api/ce/task?id=f6cfaf89-3130-4fd0-9248-660cd8619293
